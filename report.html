@@ -244,7 +244,7 @@ $(document).ready(function () {
 <p>In iteration <span class="math inline">\(k+1\)</span>, we first conduct the gradient descent step <span class="math display">\[\boldsymbol{\omega}^{\frac{1}{2}+k} \leftarrow \boldsymbol{\omega}^{k} - \gamma \nabla f(\boldsymbol{\omega}^{k}) \, \, (*)\]</span> Then update <span class="math inline">\(\boldsymbol{\omega}^{k+1} = prox_{\gamma h}(\boldsymbol{\omega}^{\frac{1}{2}+k}) = arg \underset{u}{min} \left \{ \lambda \alpha |u|_{1} + \frac{1}{2} \left \| u- \boldsymbol{\omega}^{\frac{1}{2}+k} \right \|^{2}_{2} \right \}\)</span> following the definition. Then the updated <span class="math inline">\(\boldsymbol{\omega}^{k+1}\)</span> has each entry equals to <span class="math inline">\(\frac{\omega_{j}}{|\omega_{j}|} max \{0, |\omega_{j} - \alpha \lambda|\}\)</span>, where <span class="math inline">\(\omega_{j}\)</span> is the corresponding entry in <span class="math inline">\(\boldsymbol{\omega}^{\frac{1}{2}+k}\)</span>. The loss is straightforward to be evaluated as <span class="math inline">\(\lambda \alpha \left \| \boldsymbol{\omega^{k}} \right \| _{1}\)</span>.</p>
 <p> </p>
 <p>In <a href="https://github.com/wzzlcss/sgdtest/blob/master/sgdtest/src/l1.h">l1.h</a>, we define the class.</p>
-<pre><code>// [[Rcpp::depends(RcppEigen)]]
+<pre class="r"><code>// [[Rcpp::depends(RcppEigen)]]
 #include &lt;RcppEigen.h&gt;
 #include &lt;Rcpp.h&gt;
 using namespace Rcpp;
@@ -264,7 +264,7 @@ private:
 };
 #endif</code></pre>
 <p>And the corresponding functions <strong>prox()</strong> and <strong>loss()</strong> are defined in <a href="https://github.com/wzzlcss/sgdtest/blob/master/sgdtest/src/SGD.cpp">SGD.cpp</a>.</p>
-<pre><code>l1::l1(Eigen::MatrixXd W_, double alpha_, double rate_): 
+<pre class="r"><code>l1::l1(Eigen::MatrixXd W_, double alpha_, double rate_): 
   W(W_), alpha(alpha_), rate(rate_){}
 Eigen::MatrixXd l1::prox(){
   int n = W.rows();
@@ -304,7 +304,7 @@ lasso$prox() # proximal operator(soft thresholing)</code></pre>
 <p>In the regular stochastic gradient descent algorithm, the equation <span class="math inline">\((*)\)</span> becomes:</p>
 <p><span class="math display">\[\boldsymbol{\omega}^{\frac{1}{2}+k} \leftarrow \boldsymbol{\omega}^{k} - \gamma \nabla f_{i}(\boldsymbol{\omega}^{k}), \, i \leftarrow U(1, n)\]</span>.</p>
 <p>My function <strong>SGD</strong>(<span class="math inline">\(\boldsymbol{X}\)</span>,<span class="math inline">\(\boldsymbol{y}\)</span>,iter,<span class="math inline">\(\boldsymbol{\lambda}\)</span>,<span class="math inline">\(\boldsymbol{\alpha}\)</span>,<span class="math inline">\(\boldsymbol{\gamma}\)</span>) is implemented in <a href="https://github.com/wzzlcss/sgdtest/blob/master/sgdtest/src/SGD.cpp">SGD.cpp</a> of <strong>sgdtest</strong>. The parameter <span class="math inline">\(\boldsymbol{X}\)</span> is a matrix including intercept terms, and <span class="math inline">\(\boldsymbol{y}\)</span> is a one-column matrix. The stopping occurs when the algorithm is iterated up to number <strong>iter</strong>, with step length equals to <span class="math inline">\(\gamma\)</span>. And by setting <span class="math inline">\(\alpha=1\)</span>, the function is regularized by lasso penalty with regularization strength <span class="math inline">\(\lambda\)</span>. The following code is the algorithm part of my package <strong>sgdtest</strong>.</p>
-<pre><code>// [[Rcpp::export]]
+<pre class="r"><code>// [[Rcpp::export]]
 Eigen::MatrixXd SGD(const Eigen::MatrixXd &amp; X, 
                      const Eigen::MatrixXd &amp; y, 
                      const int &amp; iter, 
