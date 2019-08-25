@@ -2,30 +2,42 @@
 # Optimize mini-batching
 
 <p style="text-align:justify;">
-The enhancement for SAGA performance from mini-batching depends on two things. Firstly, mini-batching is expected to benefit from the efficiency of vectorized computation, which reduces the cost of a single epoch. Secondly, while the total complexity of SAGA decreases linearly in batch size up to a certain value, emperical study also shows that the complexity explodes with values greater than an optimal mini-batch size (Gazagnadou, Gower and Salmon 2019). Therefore, we expect a batch size at the optimal point with vectorized computation to bring us the best performance enhancement.
+The enhancement for SAGA performance by mini-batching depends on two things. Firstly, mini-batching is expected to benefit from the efficiency of vectorized computation, which reduces the cost of a single epoch. Secondly, while the total complexity of SAGA decreases linearly in batch size up to a certain value, emperical study also shows that the complexity explodes with values greater than an optimal mini-batch size [@Gazagnadou2019]. Therefore, we expect a batch size at the optimal point with vectorized computation to bring us the best performance enhancement.
 </p>
 
 ## Optimal batch size and step size for ridge
 
 <p style="text-align:justify;">
-
-</p>
-
-Rather than the SAGA step $\eta = \frac{1}{3(\mu n + L_{max})}$, 
+For ridge regression, the SAGA step size $\eta$ proposed by Defazio [@defazio2014] is defined as $\eta = \frac{1}{3(\mu n + L_{max})}$, where $L_{max}$ is bound by the largest sample-wise squared norm of the feature matrix. The optimal $\eta$ and batch size $\mathcal{B}$ for SAGA proposed by Gazagnadou are:
 
 $$\begin{align}
-b^*  &=  \left \lfloor 1 + \frac{\mu (n-1)}{4 (\overline{L} + \lambda)} \right \rfloor \\
-\eta^* &=  \frac{1}{4} \frac{1}{max \Big \{ \mathcal{L}(b^*) + \lambda, \frac{1}{b^*} \frac{n-b^*}{n-1} L_{max} + \frac{\mu n}{4 b} \Big \}} \\
-\mathcal{L}(b^*) &= \frac{n(b^* - 1)}{b^*(n-1)} L + \frac{n - b^*}{b^*(n-1)} L_{max}
+\mathcal{B}^*  &=  \left \lfloor 1 + \frac{\mu (n-1)}{4 (\overline{L} + \lambda)} \right \rfloor \\
+\eta^* &=  \frac{1}{4} \frac{1}{max \Big \{ \mathcal{L}(b) + \lambda, \frac{1}{b} \frac{n-b}{n-1} L_{max} + \frac{\mu n}{4 b} \Big \}} \\
+\mathcal{L}(b) &= \frac{n(b - 1)}{b(n-1)} L + \frac{n - b}{b(n-1)} L_{max}
 \end{align}$$
+</p>
 
-where the ridge strength $\lambda$ has been added to every smoothness constant, and the mean smoothness constant $\overline{L}$ is replaced by the largest eigenvalue of $\mathbf{X}^T \mathbf{X}$ if it is significantly larger than the rest. 
+<p style="text-align:justify;">
+where the ridge strength $\lambda$ has been added to every smoothness constant, and the mean smoothness constant $\overline{L}$ is replaced by $L$, which is the largest eigenvalue of $\mathbf{X}^T \mathbf{X}$, if was significantly larger than the rest of eigenvalues. 
+</p>
+
+<p style="text-align:justify;">
+Use ridge regression with abalone dataset (4177 samples, 9 features) as an example ($\lambda = 10$). Under $\eta_{\text{Defazio}}$, the complexity grows with $b$, while with $\eta_{\text{optimal}}$, it decreases to a lower level. The red line indicates $\mathcal{B}^*$ for this problem.
+</p>
+
+![](./figure/stepsize_opt.png)
+
+<p style="text-align:justify;">
+We could have a look at $\mathcal{B}^*$ and $\eta_{\text{optimal}}$ along regularization path. 
+</p>
+
+![](./figure/abalone_opt.png)
 
 ## Benchmark
 
 <p style="text-align:justify;">
-The benchmark [Sript] was run on [Cedar of Canada Compute](https://docs.computecanada.ca/wiki/Cedar), it is a comparison of the returned epoch loss of each run by setting ```options(sgdnet.debug = TRUE)```. These datasets is publicly accessible, they are the testing set of [YearPredictionMSD](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/regression.html#YearPredictionMSD), scaled version of [covtype.binary](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#covtype.binary), [ijcnn1](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#ijcnn1) from LIBSVM and unscaled version of [slice](https://archive.ics.uci.edu/ml/datasets/Relative+location+of+CT+slices+on+axial+axis) from UCI. 
-</p>.
+This benchmark [Sript] was run on [Cedar of Canada Compute](https://docs.computecanada.ca/wiki/Cedar). It is a comparison of the returned epoch loss and elapsed time of one run of $(b = 1, \eta_{\text{Defazio}})$ and $(b = \mathcal{B}^*, \eta_{\text{optimal}})$, by setting ```options(sgdnet.debug = TRUE)```. These datasets is publicly accessible, they are the testing set of [YearPredictionMSD](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/regression.html#YearPredictionMSD), scaled version of [covtype.binary](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#covtype.binary), [ijcnn1](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#ijcnn1) from LIBSVM and unscaled version of [slice](https://archive.ics.uci.edu/ml/datasets/Relative+location+of+CT+slices+on+axial+axis) from UCI. 
+</p>
 
 Name                           Observations       Features
 -----------------------    ----------------       --------
@@ -43,5 +55,5 @@ covtype_binary_scale                58,1012             54
 
 ![Binomial data with ridge](./figure/binomial.png)
 
-With optimal batch size and step size, mini-batch could converge with less epoch for most examples. Futrue work based on Eigen 3.4's functionality to get a view into submatrix by indexing with a vector of indices.
+With $(b = \mathcal{B}^*, \eta_{\text{optimal}})$, mini-batch SAGA could converge with less epoch for most examples, which brings hope to futrue work based on Eigen 3.4's coming functionality of geting view into submatrix by indexing with a vector of indices.
 
