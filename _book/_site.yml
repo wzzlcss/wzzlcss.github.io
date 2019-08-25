@@ -1,0 +1,28 @@
+me: "my-website"
+navbar:
+  title: "My Website"
+  type: inverse
+  left:
+    - text: "Home"
+      icon: fa-home
+      href: index.html
+    - text: "About"
+      icon: fa-info
+      href: about.html
+    - text: "More"
+      icon: fa-gear
+      menu:
+        - text: "Heading 1"
+        - text: "Page A"
+          href: index.html
+        - text: "Page B"
+          href: minibatch.html
+        - text: "---------"
+        - text: "penalty 2"
+        - text: "Page C"
+          href: penalty.html
+        - text: "Page D"
+          href: poisson.html
+  right:
+    - icon: fa-question fa-lg
+      href: https://example.com
