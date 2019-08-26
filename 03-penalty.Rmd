@@ -77,6 +77,10 @@ plot(sgd_mnet, xvar = "lambda")
 plot(ncv_mnet, log.l = TRUE)
 ```
 
+<left>
+MCP/Mnet penalized Gaussian model on prostate dataset
+</left>
+
 ## SCAD
 
 <p style="text-align:justify;">
@@ -112,4 +116,7 @@ plot(sgd_snet, xvar = "lambda")
 plot(ncv_mnet, log.l = TRUE)
 ```
 
+<left>
+SCAD/Snet penalized Gaussian model on prostate dataset
+</left>
 
