@@ -36,21 +36,43 @@ $$\begin{equation} \beta_j \leftarrow \begin{cases} \frac{ \Big (1 - \eta \alpha
 MCP begins by applying the same rate of penalization as lasso, but continuously relaxes that penalization until $\beta_j$ becomes large [@breheny2011]. When $\alpha = 0$, this becomes the proximal updates for ridge [@friedman2010]. For MCP, **sgdnet** set the default noncovexity parameter $\gamma$ to $3$. Here we use the example from [**ncvreg**](https://cran.r-project.org/web/packages/ncvreg/index.html) to demostrate its usage.
 </p>
 
-```{r mcpsetup, echo = FALSE, message = FALSE}
-devtools::load_all("~/sgdnet/penalty/sgdnet")
+```{r ncvregfit, echo = FALSE, message = FALSE}
+library(ncvreg)
+data(Prostate)
+x <- Prostate$X
+y <- Prostate$y
+ncv_mcp  <- ncvreg(x, y, penalty = "MCP")
+ncv_mnet <- ncvreg(x, y, alpha = 0.5, penalty = "MCP")
+ncv_scad <- ncvreg(x, y, penalty = "SCAD")
+ncv_snet <- ncvreg(x, y, alpha = 0.5, penalty = "SCAD")
+detach(package:ncvreg)
 ```
 
-```{r mcp}
+```{r mcpsetup, echo = FALSE, message = FALSE}
+devtools::load_all("~/sgdnet/penalty/sgdnet")
+sgd_mcp  <- sgdnet(x, y, penalty = "MCP", lambda = ncv_mcp$lambda)
+sgd_mnet <- sgdnet(x, y, alpha = 0.5, penalty = "MCP", 
+                   lambda = ncv_mnet$lambda)
+sgd_scad <- sgdnet(x, y, penalty = "SCAD", lambda = ncv_scad$lambda)
+sgd_snet <- sgdnet(x, y, alpha = 0.5, penalty = "SCAD",
+                   lambda = ncv_snet$lambda)
+```
+
+```{r mcp, eval=FALSE}
 data(prostate)
 x <- prostate$x
 y <- prostate$y
 sgd_mcp  <- sgdnet(x, y, penalty = "MCP")
+ncv_mcp  <- ncvreg(x, y, penalty = "MCP")
 sgd_mnet <- sgdnet(x, y, alpha = 0.5, penalty = "MCP")
+ncv_mnet <- ncvreg(x, y, alpha = 0.5, penalty = "MCP")
 ```
 
 ```{r plotmcp, out.width="50%", out.extra='style="display: inline-block;"', echo=FALSE}
 plot(sgd_mcp, xvar = "lambda")
+plot(ncv_mcp, log.l = TRUE)
 plot(sgd_mnet, xvar = "lambda")
+plot(ncv_mnet, log.l = TRUE)
 ```
 
 ## SCAD
@@ -74,14 +96,18 @@ $$\begin{equation} \beta_j \leftarrow \begin{cases}
 Similar to MCP, SCAD begins by applying lasso's penalization rate, and reduces the rate to 0 as $\beta_j$ gets away from 0. The difference is in the way to make this transition. **sgdnet** has a default nonconvexity parameter $\gamma = 3.7$. It can be specified by the ```non_convexity``` variable in ```sgdnet( )``` function.
 </p>
 
-```{r scad}
+```{r scad, eval=FALSE}
 sgd_scad <- sgdnet(x, y, penalty = "SCAD")
+ncv_scad <- ncvreg(x, y, penalty = "SCAD")
 sgd_snet <- sgdnet(x, y, alpha = 0.5, penalty = "SCAD")
+ncv_snet <- ncvreg(x, y, alpha = 0.5, penalty = "SCAD")
 ```
 
 ```{r plotscad, out.width="50%", out.extra='style="display: inline-block;"', echo=FALSE}
 plot(sgd_scad, xvar = "lambda")
+plot(ncv_mcp, log.l = TRUE)
 plot(sgd_snet, xvar = "lambda")
+plot(ncv_mnet, log.l = TRUE)
 ```
 
 

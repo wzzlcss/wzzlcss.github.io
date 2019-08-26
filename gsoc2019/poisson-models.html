@@ -182,6 +182,15 @@ Poisson model with ridge regression on caddisfly dataset
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sfit1 &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y,<span class="dt">family=</span><span class="st">&quot;poisson&quot;</span>,<span class="dt">alpha=</span><span class="dv">1</span>)
 gfit1 &lt;-<span class="st"> </span><span class="kw">glmnet</span>(x, y,<span class="dt">family=</span><span class="st">&quot;poisson&quot;</span>,<span class="dt">alpha=</span><span class="dv">1</span>)</code></pre></div>
 <p><img src="_main_files/figure-html/plot2-1.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plot2-2.png" width="50%" style="display: inline-block;" /></p>
+<pre><code>#&gt; Warning: package &#39;ncvreg&#39; was built under R version 3.5.2
+#&gt; 
+#&gt; Attaching package: &#39;ncvreg&#39;
+#&gt; The following object is masked _by_ &#39;.GlobalEnv&#39;:
+#&gt; 
+#&gt;     prostate
+#&gt; The following object is masked from &#39;package:sgdnet&#39;:
+#&gt; 
+#&gt;     heart</code></pre>
 <center>
 Poisson model with lasso regression on caddisfly dataset
 </center>

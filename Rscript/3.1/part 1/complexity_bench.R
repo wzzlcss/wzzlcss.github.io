@@ -3,11 +3,12 @@
 # and download optB.R to your working dir #
 
 #------ Helper function ------#
+library(lattice)
+library(latticeExtra)
+library(grid)
+lattice.options(default.theme = list(fontsize = list(points = 4, text = 8)))
+
 complexity_plot <- function(dataset, data, text) {
-  library(lattice)
-  library(latticeExtra)
-  library(grid)
-  lattice.options(default.theme = list(fontsize = list(points = 4, text = 8)))
   
   p <- xyplot(epoch ~ batch|dataset+lambda,
               data = data,
@@ -127,12 +128,14 @@ p
 dev.off()
 
 library(glmnet)
-fit <- glmnet(abalone$x, abalone$y, alpha = 0)
-lambda_seq <- fit$lambda
+x <- scale(abalone$x)
+y <- abalone$y
+fit <- glmnet(x, y, alpha = 0)
+lambda_seq <- fit$lambda[50:100]
 B <- step <- rep(0, length(lambda_seq))
 
 for (i in 1:length(lambda_seq)) {
-  batch_info <- opt(abalone$x, abalone$y, "gaussian", lambda_seq[i])
+  batch_info <- opt(x, y, "gaussian", lambda_seq[i])
   B[i] <- batch_info$B
   step[i] <- batch_info$step
 }

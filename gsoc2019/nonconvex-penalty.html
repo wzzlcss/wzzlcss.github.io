@@ -170,8 +170,10 @@ MCP begins by applying the same rate of penalization as lasso, but continuously 
 x &lt;-<span class="st"> </span>prostate<span class="op">$</span>x
 y &lt;-<span class="st"> </span>prostate<span class="op">$</span>y
 sgd_mcp  &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y, <span class="dt">penalty =</span> <span class="st">&quot;MCP&quot;</span>)
-sgd_mnet &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">penalty =</span> <span class="st">&quot;MCP&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/plotmcp-1.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plotmcp-2.png" width="50%" style="display: inline-block;" /></p>
+ncv_mcp  &lt;-<span class="st"> </span><span class="kw">ncvreg</span>(x, y, <span class="dt">penalty =</span> <span class="st">&quot;MCP&quot;</span>)
+sgd_mnet &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">penalty =</span> <span class="st">&quot;MCP&quot;</span>)
+ncv_mnet &lt;-<span class="st"> </span><span class="kw">ncvreg</span>(x, y, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">penalty =</span> <span class="st">&quot;MCP&quot;</span>)</code></pre></div>
+<p><img src="_main_files/figure-html/plotmcp-1.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plotmcp-2.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plotmcp-3.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plotmcp-4.png" width="50%" style="display: inline-block;" /></p>
 </div>
 <div id="scad" class="section level2">
 <h2><span class="header-section-number">4.3</span> SCAD</h2>
@@ -190,8 +192,10 @@ where <span class="math inline">\(\lambda \geq 0\)</span> and <span class="math 
 Similar to MCP, SCAD begins by applying lasso’s penalization rate, and reduces the rate to 0 as <span class="math inline">\(\beta_j\)</span> gets away from 0. The difference is in the way to make this transition. <strong>sgdnet</strong> has a default nonconvexity parameter <span class="math inline">\(\gamma = 3.7\)</span>. It can be specified by the <code>non_convexity</code> variable in <code>sgdnet( )</code> function.
 </p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sgd_scad &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y, <span class="dt">penalty =</span> <span class="st">&quot;SCAD&quot;</span>)
-sgd_snet &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">penalty =</span> <span class="st">&quot;SCAD&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/plotscad-1.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plotscad-2.png" width="50%" style="display: inline-block;" /></p>
+ncv_scad &lt;-<span class="st"> </span><span class="kw">ncvreg</span>(x, y, <span class="dt">penalty =</span> <span class="st">&quot;SCAD&quot;</span>)
+sgd_snet &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">penalty =</span> <span class="st">&quot;SCAD&quot;</span>)
+ncv_snet &lt;-<span class="st"> </span><span class="kw">ncvreg</span>(x, y, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">penalty =</span> <span class="st">&quot;SCAD&quot;</span>)</code></pre></div>
+<p><img src="_main_files/figure-html/plotscad-1.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plotscad-2.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plotscad-3.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plotscad-4.png" width="50%" style="display: inline-block;" /></p>
 
 </div>
 </div>
