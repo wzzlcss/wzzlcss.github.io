@@ -1,6 +1,7 @@
 ---
 title: "GSoC 2019 Final Report"
 author: "Qincheng Lu"
+date: "`r Sys.Date()`"
 site: bookdown::gsoc2019
 documentclass: book
 output:
