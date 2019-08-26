@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3 Optimize mini-batching | GSoC 2019 Final Report</title>
-  <meta name="description" content="3 Optimize mini-batching | GSoC 2019 Final Report" />
+  <title>6 Reference | GSoC 2019 Final Report</title>
+  <meta name="description" content="6 Reference | GSoC 2019 Final Report" />
   <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3 Optimize mini-batching | GSoC 2019 Final Report" />
+  <meta property="og:title" content="6 Reference | GSoC 2019 Final Report" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3 Optimize mini-batching | GSoC 2019 Final Report" />
+  <meta name="twitter:title" content="6 Reference | GSoC 2019 Final Report" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="new-saga-features.html"/>
-<link rel="next" href="nonconvex-penalty.html"/>
+<link rel="prev" href="poisson-models.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -136,63 +136,40 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="optimize-mini-batching" class="section level1">
-<h1><span class="header-section-number">3</span> Optimize mini-batching</h1>
-<p style="text-align:justify;">
-The enhancement for SAGA performance by mini-batching depends on two things. Firstly, mini-batching is expected to benefit from the efficiency of vectorized computation, which reduces the cost of a single epoch. Secondly, while the total complexity of SAGA decreases linearly in batch size up to a certain value, emperical study also shows that the complexity explodes with values greater than an optimal mini-batch size <span class="citation">(Gazagnadou, Gower, and Salmon <a href="#ref-Gazagnadou2019">2019</a>)</span>. Therefore, we expect a batch size at the optimal point with vectorized computation to bring us the best performance enhancement.
-</p>
-<div id="optimal-batch-size-and-step-size-for-ridge" class="section level2">
-<h2><span class="header-section-number">3.1</span> Optimal batch size and step size for ridge</h2>
-<p style="text-align:justify;">
-<p>For ridge regression, the SAGA step size <span class="math inline">\(\eta\)</span> proposed by Defazio <span class="citation">(Defazio, Bach, and Lacoste-Julien <a href="#ref-defazio2014">2014</a>)</span> is defined as <span class="math inline">\(\eta = \frac{1}{3(\mu n + L_{\text{max}})}\)</span>, where <span class="math inline">\(L_{\text{max}}\)</span> is bound by the largest sample-wise squared norm of the feature matrix. The optimal <span class="math inline">\(\eta\)</span> and batch size <span class="math inline">\(\mathcal{B}\)</span> for SAGA proposed by Gazagnadou are:</p>
-<span class="math display">\[\begin{align}
-\mathcal{B}^*  &amp;=  \left \lfloor 1 + \frac{\mu (n-1)}{4 (\overline{L} + \lambda)} \right \rfloor \\
-\eta^* &amp;=  \frac{1}{4} \frac{1}{\text{max} \Big \{ \mathcal{L}(b) + \lambda, \frac{1}{b} \frac{n-b}{n-1} L_{\text{max}} + \frac{\mu n}{4 b} \Big \}} \\
-\mathcal{L}(b) &amp;= \frac{n(b - 1)}{b(n-1)} L + \frac{n - b}{b(n-1)} L_{\text{max}}
-\end{align}\]</span>
-</p>
-<p style="text-align:justify;">
-where the ridge strength <span class="math inline">\(\lambda\)</span> has been added to every smoothness constant, and the mean smoothness constant <span class="math inline">\(\overline{L}\)</span> is replaced by <span class="math inline">\(L\)</span>, which is the largest eigenvalue of <span class="math inline">\(\mathbf{X}^T \mathbf{X}\)</span>, if was significantly larger than the rest of eigenvalues.
-</p>
-<p style="text-align:justify;">
-Use ridge regression with abalone dataset (4177 samples, 9 features) as an example (<span class="math inline">\(\lambda = 10\)</span>) <a href="https://github.com/wzzlcss/wzzlcss.github.io/blob/master/Rscript/3.1/part%201/complexity_bench.R">(R Sript)</a>. Under <span class="math inline">\(\eta_{\text{Defazio}}\)</span>, the complexity grows with <span class="math inline">\(b\)</span>, while with <span class="math inline">\(\eta_{\text{optimal}}\)</span>, it decreases to a lower level. The red line indicates <span class="math inline">\(\mathcal{B}^*\)</span> for this problem.
-</p>
-<div class="figure">
-<img src="figure/stepsize_opt.png" />
+<div id="reference" class="section level1">
+<h1><span class="header-section-number">6</span> Reference</h1>
 
-</div>
-<p style="text-align:justify;">
-We could have a look at <span class="math inline">\(\mathcal{B}^*\)</span> and <span class="math inline">\(\eta_{\text{optimal}}\)</span> along regularization path.
-</p>
-<div class="figure">
-<img src="figure/abalone_opt.png" />
-
-</div>
-</div>
-<div id="benchmark" class="section level2">
-<h2><span class="header-section-number">3.2</span> Benchmark</h2>
-<p style="text-align:justify;">
-This benchmark <a href="https://github.com/wzzlcss/wzzlcss.github.io/blob/master/Rscript/3.1/part%202/pass_bench.R">(R Sript)</a> was run on <a href="https://docs.computecanada.ca/wiki/Cedar">Cedar of Canada Compute</a>. It is a comparison of the returned epoch loss and elapsed time of one run of <span class="math inline">\((b = 1, \eta_{\text{Defazio}})\)</span> and <span class="math inline">\((b = \mathcal{B}^*, \eta_{\text{optimal}})\)</span>, by setting <code>options(sgdnet.debug = TRUE)</code>. These datasets is publicly accessible, they are the testing set of <a href="https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/regression.html#YearPredictionMSD">YearPredictionMSD</a> (<span class="math inline">\(n = 5,1630, \,\, p = 90\)</span>), scaled version of <a href="https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#covtype.binary">covtype.binary</a> (<span class="math inline">\(n = 58,1012, \,\, p = 54\)</span>), <a href="https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#ijcnn1">ijcnn1</a> (<span class="math inline">\(n = 14,1691, \,\, p = 22\)</span>) from LIBSVM and unscaled version of <a href="https://archive.ics.uci.edu/ml/datasets/Relative+location+of+CT+slices+on+axial+axis">slice</a> (<span class="math inline">\(n = 5,3500, \,\, p = 384\)</span>) from UCI.
-</p>
-<div class="figure">
-<img src="figure/gaussian.png" alt="Gaussian data with ridge" />
-<p class="caption">Gaussian data with ridge</p>
-</div>
-<div class="figure">
-<img src="figure/binomial.png" alt="Binomial data with ridge" />
-<p class="caption">Binomial data with ridge</p>
-</div>
-<p>With <span class="math inline">\((b = \mathcal{B}^*, \eta_{\text{optimal}})\)</span>, mini-batch SAGA could converge with less epoch for most examples, which brings hope to futrue work based on Eigen 3.4’s coming functionality of geting view into submatrix by indexing with a vector of indices.</p>
-
-</div>
-</div>
-<h3> Reference</h3>
 <div id="refs" class="references">
-<div id="ref-defazio2014">
+<div>
+<p>Breheny, Patrick, and Jian Huang. 2011. “Coordinate Descent Algorithms for Nonconvex Penalized Regression, with Application to Biological Feature Selection.” <em>The Annals of Applied Statistics</em> 5 (1): 232–53.</p>
+</div>
+<div>
 <p>Defazio, Aaron, Francis Bach, and Simon Lacoste-Julien. 2014. “SAGA: A Fast Incremental Gradient Method with Support for Non-Strongly Convex Composite Objectives.” In <em>Advances in Neural Information Processing Systems 27</em>, 2:1646–54. Montreal, Canada: Curran Associates, Inc.</p>
 </div>
-<div id="ref-Gazagnadou2019">
+<div>
+<p>Fan, Jianqing, and Runze Li. 2001. “Variable Selection via Nonconcave Penalized Likelihood and Its Oracle Properties.” <em>Journal of the American Statistical Association</em> 38 (2): 1348–60.</p>
+</div>
+<div>
+<p>Friedman, Jerome, Trevor Hastie, and Robert Tibshirani. 2010. “Regularization Paths for Generalized Linear Models via Coordinate Descent.” <em>Journal of Statistical Software</em> 33 (1): 1–22.</p>
+</div>
+<div>
 <p>Gazagnadou, Nidham, Robert M. Gower, and Joseph Salmon. 2019. “Optimal Mini-Batch and Step Sizes for SAGA.” <em>arXiv:1902.00071 [Math]</em>, July. <a href="http://arxiv.org/abs/1902.00071" class="uri">http://arxiv.org/abs/1902.00071</a>.</p>
+</div>
+<div>
+<p>Huang, Breheny, Jian., and Cun-Hui Zhang. 2016. “The Mnet Method for Variable Selection.” <em>Statistica Sinica</em> 26 (3): 903–23.</p>
+</div>
+<div>
+<p>Park, Youngsuk, and Ernest K. Ryu. 2018. “Linear Convergence of Cyclic SAGA.” <em>arXiv:1810.11167 [Math]</em>, October. <a href="http://arxiv.org/abs/1810.11167" class="uri">http://arxiv.org/abs/1810.11167</a>.</p>
+</div>
+<div>
+<p>Schmidt, Mark, Nicolas Le Roux, and Francis Bach. 2017. “Minimizing Finite Sums with the Stochastic Average Gradient.” <em>Mathematical Programming</em> 162 (1-2): 83–112.</p>
+</div>
+<div>
+<p>Wang, Zhu et al. 2016. “Penalized Count Data Regression with Application to Hospital Stay After Pediatric Cardiac Surgery.” <em>Stat Methods Med Res</em> 25 (6): 2685–2703.</p>
+</div>
+<div>
+<p>Zhang, Cun-Hui. 2010. “Nearly Unbiased Variable Selection Under Minimax Concave Penalty.” <em>The Annals of Applied Statistics</em> 38 (2): 894–942.</p>
+</div>
 </div>
 </div>
             </section>
@@ -200,8 +177,8 @@ This benchmark <a href="https://github.com/wzzlcss/wzzlcss.github.io/blob/master
           </div>
         </div>
       </div>
-<a href="new-saga-features.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="nonconvex-penalty.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="poisson-models.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

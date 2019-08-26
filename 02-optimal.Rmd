@@ -8,12 +8,12 @@ The enhancement for SAGA performance by mini-batching depends on two things. Fir
 ## Optimal batch size and step size for ridge
 
 <p style="text-align:justify;">
-For ridge regression, the SAGA step size $\eta$ proposed by Defazio [@defazio2014] is defined as $\eta = \frac{1}{3(\mu n + L_{max})}$, where $L_{max}$ is bound by the largest sample-wise squared norm of the feature matrix. The optimal $\eta$ and batch size $\mathcal{B}$ for SAGA proposed by Gazagnadou are:
+For ridge regression, the SAGA step size $\eta$ proposed by Defazio [@defazio2014] is defined as $\eta = \frac{1}{3(\mu n + L_{\text{max}})}$, where $L_{\text{max}}$ is bound by the largest sample-wise squared norm of the feature matrix. The optimal $\eta$ and batch size $\mathcal{B}$ for SAGA proposed by Gazagnadou are:
 
 $$\begin{align}
 \mathcal{B}^*  &=  \left \lfloor 1 + \frac{\mu (n-1)}{4 (\overline{L} + \lambda)} \right \rfloor \\
-\eta^* &=  \frac{1}{4} \frac{1}{max \Big \{ \mathcal{L}(b) + \lambda, \frac{1}{b} \frac{n-b}{n-1} L_{max} + \frac{\mu n}{4 b} \Big \}} \\
-\mathcal{L}(b) &= \frac{n(b - 1)}{b(n-1)} L + \frac{n - b}{b(n-1)} L_{max}
+\eta^* &=  \frac{1}{4} \frac{1}{\text{max} \Big \{ \mathcal{L}(b) + \lambda, \frac{1}{b} \frac{n-b}{n-1} L_{\text{max}} + \frac{\mu n}{4 b} \Big \}} \\
+\mathcal{L}(b) &= \frac{n(b - 1)}{b(n-1)} L + \frac{n - b}{b(n-1)} L_{\text{max}}
 \end{align}$$
 </p>
 
@@ -36,22 +36,12 @@ We could have a look at $\mathcal{B}^*$ and $\eta_{\text{optimal}}$ along regula
 ## Benchmark
 
 <p style="text-align:justify;">
-This benchmark [(R Sript)](https://github.com/wzzlcss/wzzlcss.github.io/blob/master/Rscript/3.1/part%202/pass_bench.R) was run on [Cedar of Canada Compute](https://docs.computecanada.ca/wiki/Cedar). It is a comparison of the returned epoch loss and elapsed time of one run of $(b = 1, \eta_{\text{Defazio}})$ and $(b = \mathcal{B}^*, \eta_{\text{optimal}})$, by setting ```options(sgdnet.debug = TRUE)```. These datasets is publicly accessible, they are the testing set of [YearPredictionMSD](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/regression.html#YearPredictionMSD), scaled version of [covtype.binary](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#covtype.binary), [ijcnn1](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#ijcnn1) from LIBSVM and unscaled version of [slice](https://archive.ics.uci.edu/ml/datasets/Relative+location+of+CT+slices+on+axial+axis) from UCI. 
+This benchmark [(R Sript)](https://github.com/wzzlcss/wzzlcss.github.io/blob/master/Rscript/3.1/part%202/pass_bench.R) was run on [Cedar of Canada Compute](https://docs.computecanada.ca/wiki/Cedar). It is a comparison of the returned epoch loss and elapsed time of one run of $(b = 1, \eta_{\text{Defazio}})$ and $(b = \mathcal{B}^*, \eta_{\text{optimal}})$, by setting ```options(sgdnet.debug = TRUE)```. These datasets is publicly accessible, they are the testing set of [YearPredictionMSD](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/regression.html#YearPredictionMSD) ($n = 5,1630, \,\, p = 90$), scaled version of [covtype.binary](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#covtype.binary) ($n = 58,1012, \,\, p = 54$), [ijcnn1](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#ijcnn1) ($n = 14,1691, \,\, p = 22$) from LIBSVM and unscaled version of [slice](https://archive.ics.uci.edu/ml/datasets/Relative+location+of+CT+slices+on+axial+axis) ($n = 5,3500, \,\, p = 384$) from UCI. 
 </p>
-
-Name                           Observations       Features
------------------------    ----------------       --------
-YearPredictionMSD_test               5,1630             90
-slice_unscale                        5,3500            384
-
-
 
 ![Gaussian data with ridge](./figure/gaussian.png)
 
-Name                           Observations       Features
-----------------------     ----------------       --------
-ijcnn1_full                         14,1691             22
-covtype_binary_scale                58,1012             54
+
 
 ![Binomial data with ridge](./figure/binomial.png)
 

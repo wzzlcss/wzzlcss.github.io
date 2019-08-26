@@ -118,7 +118,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.1" data-path="poisson-models.html"><a href="poisson-models.html#overview-1"><i class="fa fa-check"></i><b>5.1</b> Overview</a></li>
 <li class="chapter" data-level="5.2" data-path="poisson-models.html"><a href="poisson-models.html#example"><i class="fa fa-check"></i><b>5.2</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>6</b> References</a></li>
+<li class="chapter" data-level="6" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>6</b> Reference</a></li>
 </ul>
 
       </nav>
@@ -141,7 +141,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="introduction" class="section level2">
 <h2><span class="header-section-number">4.1</span> Introduction</h2>
 <p style="text-align:justify;">
-In addition to lasso, ridge and elastic net penalty, <strong>sgdnet</strong> also fits along regularization paths for linear regression using nonconvex penalties, which are the minimax concave penalty (MCP) <span class="citation">(Zhang <a href="#ref-zhang2010">2010</a>)</span> and smoothly clipped absolute penalty (SCAD) <span class="citation">(Fan and Li <a href="#ref-fan2001">2001</a>)</span>.
+In addition to lasso, ridge and elastic net penalty, <strong>sgdnet</strong> also fits along regularization path for linear regression using nonconvex penalties, which are minimax concave penalty (MCP) <span class="citation">(Zhang <a href="#ref-zhang2010">2010</a>)</span> and smoothly clipped absolute penalty (SCAD) <span class="citation">(Fan and Li <a href="#ref-fan2001">2001</a>)</span>.
 </p>
 <p style="text-align:justify;">
 The ridge part in <strong>sgdnet</strong> use scale update <span class="math inline">\(\beta^{k + n} = \beta^{k} \prod _{i = 1}^{n}(1- \eta(1-\alpha) \lambda)\)</span>, where <span class="math inline">\(\lambda\)</span> is the regularization strength, <span class="math inline">\(\alpha\)</span> is elastic net mixing parameter and <span class="math inline">\(\eta\)</span> is the step size. Other penalties are applied via a proximal step at each iteration from the coefficient <span class="math inline">\(\beta^{k+\frac{1}{2}}\)</span> after the average gradient step. The proximal step solves a minimization problem:
@@ -157,22 +157,22 @@ The ridge part in <strong>sgdnet</strong> use scale update <span class="math inl
 The definition for minimax concave penalty for each element of coefficient <span class="math inline">\(\beta\)</span> is given by:
 </p>
 <p><span class="math display">\[\begin{equation} p_{\lambda, \gamma}(\beta_j) = \begin{cases}
-\lambda \beta_j - \frac{\beta_j^2}{2 \gamma} &amp; \text{if} \,\, \beta_j \leq \gamma \lambda \\ \frac{1}{2} \gamma \lambda^2 &amp; \text{otherwise}
+\lambda \beta_j - \frac{\beta_j^2}{2 \gamma} &amp; \text{if} \,\, |\beta_j| \leq \gamma \lambda \\ \frac{1}{2} \gamma \lambda^2 &amp; \text{otherwise}
 \end{cases}\end{equation}\]</span></p>
 <p style="text-align:justify;">
 where <span class="math inline">\(\lambda \geq 0\)</span> is the regularization strength and <span class="math inline">\(\gamma &gt; 1\)</span> is a user defined nonconvexity parameter. We have <span class="math inline">\(h_{\lambda}(\beta) = p_{\alpha \lambda, \gamma}(\beta) + \frac{(1 - \alpha)\lambda}{2} ||\beta||_2^2\)</span> if user wants to mix ridge with MCP in the proximal step by setting <span class="math inline">\(\alpha\)</span> <span class="citation">(B. Huang Jian. and Zhang <a href="#ref-huang2016">2016</a>)</span>. The proximal operator for them is given by:
 </p>
-<p><span class="math display">\[\begin{equation} \beta_j \leftarrow \begin{cases} \frac{ \Big (1 - \eta \alpha \lambda \Big )_{+} \beta_j}{1 + \eta (1-\alpha)\lambda-\frac{\eta}{\gamma}} &amp; \text{if} \,\, \beta_j \leq \gamma \alpha \lambda \\ \frac{\beta_j}{1+\eta(1-\alpha)\lambda} &amp; \text{otherwise}. \end{cases} \end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation} \beta_j \leftarrow \begin{cases} \frac{ \Big (1 - \eta \alpha \lambda \Big )_{+} \beta_j}{1 + \eta (1-\alpha)\lambda-\frac{\eta}{\gamma}} &amp; \text{if} \,\, |\beta_j| \leq \gamma \alpha \lambda \Big (1 + (1- \alpha) \lambda\Big ) \\ \frac{\beta_j}{1+\eta(1-\alpha)\lambda} &amp; \text{otherwise}. \end{cases} \end{equation}\]</span></p>
 <p style="text-align:justify;">
 MCP begins by applying the same rate of penalization as lasso, but continuously relaxes that penalization until <span class="math inline">\(\beta_j\)</span> becomes large <span class="citation">(Breheny and Huang <a href="#ref-breheny2011">2011</a>)</span>. When <span class="math inline">\(\alpha = 0\)</span>, this becomes the proximal updates for ridge <span class="citation">(Friedman, Hastie, and Tibshirani <a href="#ref-friedman2010">2010</a>)</span>. For MCP, <strong>sgdnet</strong> set the default noncovexity parameter <span class="math inline">\(\gamma\)</span> to <span class="math inline">\(3\)</span>. Here we use the example from <a href="https://cran.r-project.org/web/packages/ncvreg/index.html"><strong>ncvreg</strong></a> to demostrate its usage.
 </p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(prostate)
 x &lt;-<span class="st"> </span>prostate<span class="op">$</span>x
 y &lt;-<span class="st"> </span>prostate<span class="op">$</span>y
-sgd_mcp  &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y, <span class="dt">penalty =</span> <span class="st">&quot;MCP&quot;</span>)
-ncv_mcp  &lt;-<span class="st"> </span><span class="kw">ncvreg</span>(x, y, <span class="dt">penalty =</span> <span class="st">&quot;MCP&quot;</span>)
-sgd_mnet &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">penalty =</span> <span class="st">&quot;MCP&quot;</span>)
-ncv_mnet &lt;-<span class="st"> </span><span class="kw">ncvreg</span>(x, y, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">penalty =</span> <span class="st">&quot;MCP&quot;</span>)</code></pre></div>
+sgd_mcp  &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y, <span class="dt">non_convexity =</span> <span class="dv">3</span>, <span class="dt">penalty =</span> <span class="st">&quot;MCP&quot;</span>)
+ncv_mcp  &lt;-<span class="st"> </span><span class="kw">ncvreg</span>(x, y, <span class="dt">gamma =</span> <span class="dv">3</span>, <span class="dt">penalty =</span> <span class="st">&quot;MCP&quot;</span>)
+sgd_mnet &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y, <span class="dt">non_convexity =</span> <span class="dv">3</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">penalty =</span> <span class="st">&quot;MCP&quot;</span>)
+ncv_mnet &lt;-<span class="st"> </span><span class="kw">ncvreg</span>(x, y, <span class="dt">gamma =</span> <span class="dv">3</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">penalty =</span> <span class="st">&quot;MCP&quot;</span>)</code></pre></div>
 <p><img src="_main_files/figure-html/plotmcp-1.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plotmcp-2.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plotmcp-3.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plotmcp-4.png" width="50%" style="display: inline-block;" /></p>
 </div>
 <div id="scad" class="section level2">
@@ -180,26 +180,26 @@ ncv_mnet &lt;-<span class="st"> </span><span class="kw">ncvreg</span>(x, y, <spa
 <p style="text-align:justify;">
 Following the same notation, the definition for smoothly clipped absolute penalty for each element of coefficient <span class="math inline">\(\beta\)</span> is given by:
 </p>
-<p><span class="math display">\[\begin{equation} p_{\lambda, \gamma}(\beta_j) = \begin{cases} \lambda \beta_j &amp; \text{if} \, \,\beta_j \leq \lambda\\ \frac{\gamma \lambda \beta_j - \frac{1}{2} (\beta_j^2 + \lambda^2)}{\gamma - 1} \gamma \lambda^2 &amp; \text{if} \,\, \lambda &lt; \beta_j \leq \gamma \lambda \\ \frac{\lambda^2 (\gamma^2 - 1)}{2(\gamma - 1)} &amp; \text{therwise} \end{cases}  \end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation} p_{\lambda, \gamma}(\beta_j) = \begin{cases} \lambda \beta_j &amp; \text{if} \, \,|\beta_j| \leq \lambda\\ \frac{\gamma \lambda \beta_j - \frac{1}{2} (\beta_j^2 + \lambda^2)}{\gamma - 1} \gamma \lambda^2 &amp; \text{if} \,\, \lambda &lt; |\beta_j| \leq \gamma \lambda \\ \frac{\lambda^2 (\gamma^2 - 1)}{2(\gamma - 1)} &amp; \text{therwise} \end{cases}  \end{equation}\]</span></p>
 <p style="text-align:justify;">
 where <span class="math inline">\(\lambda \geq 0\)</span> and <span class="math inline">\(\gamma &gt; 2\)</span>. The proximal operator for SCAD <span class="citation">(Wang <a href="#ref-zhu2016">2016</a>)</span> of strength <span class="math inline">\(\alpha \lambda\)</span>, with ridge of strength <span class="math inline">\((1-\alpha)\lambda\)</span> can be solved as:
 </p>
 <p><span class="math display">\[\begin{equation} \beta_j \leftarrow \begin{cases} 
-\frac{\Big ( 1-\eta \alpha \lambda \Big )_{+} \beta_j}{1+\eta(1-\alpha)\lambda} &amp; \text{if} \, \,\beta_j \leq \alpha \lambda + \eta \alpha \lambda ( 1 + (1-\alpha) \lambda)\\ 
-\frac{\Big ( 1 - \frac{\eta \gamma}{ \gamma - 1} \alpha \lambda \Big)_{+} \beta_j}{1- \frac{\eta}{\gamma - 1} + \eta (1- \alpha) \lambda} &amp; \text{if} \,\, \alpha \lambda + \eta \alpha \lambda ( 1 + (1-\alpha) \lambda) &lt; \beta_j \leq \gamma \alpha \lambda ( 1 - \eta (1 - \alpha) \lambda) \\ 
+\frac{\Big ( 1-\eta \alpha \lambda \Big )_{+} \beta_j}{1+\eta(1-\alpha)\lambda} &amp; \text{if} \, \,|\beta_j| \leq \alpha \lambda + \eta \alpha \lambda ( 1 + (1-\alpha) \lambda)\\ 
+\frac{\Big ( 1 - \frac{\gamma}{ \gamma - 1} \eta \alpha \lambda \Big)_{+} \beta_j}{1- \frac{\eta}{\gamma - 1} + \eta (1- \alpha) \lambda} &amp; \text{if} \,\, \alpha \lambda + \eta \alpha \lambda ( 1 + (1-\alpha) \lambda) &lt; |\beta_j| \leq \gamma \alpha \lambda ( 1 + \eta (1 - \alpha) \lambda) \\ 
 \frac{\beta_j}{1+\eta(1-\alpha)\lambda} &amp; \text{therwise} \end{cases}  \end{equation}\]</span></p>
 <p style="text-align:justify;">
-Similar to MCP, SCAD begins by applying lasso’s penalization rate, and reduces the rate to 0 as <span class="math inline">\(\beta_j\)</span> gets away from 0. The difference is in the way to make this transition. <strong>sgdnet</strong> has a default nonconvexity parameter <span class="math inline">\(\gamma = 3.7\)</span>. It can be specified by the <code>non_convexity</code> variable in <code>sgdnet( )</code> function.
+Similar to MCP, SCAD begins by applying lasso’s penalization rate, and reduces the rate to 0 as <span class="math inline">\(\beta_j\)</span> gets away from 0. The difference is in the way to make this transition. <strong>sgdnet</strong> has a default nonconvexity parameter <span class="math inline">\(\gamma = 3.7\)</span>. It can be specified by the <code>non_convexity</code> variable in <code>sgdnet()</code> function.
 </p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sgd_scad &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y, <span class="dt">penalty =</span> <span class="st">&quot;SCAD&quot;</span>)
-ncv_scad &lt;-<span class="st"> </span><span class="kw">ncvreg</span>(x, y, <span class="dt">penalty =</span> <span class="st">&quot;SCAD&quot;</span>)
-sgd_snet &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">penalty =</span> <span class="st">&quot;SCAD&quot;</span>)
-ncv_snet &lt;-<span class="st"> </span><span class="kw">ncvreg</span>(x, y, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">penalty =</span> <span class="st">&quot;SCAD&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sgd_scad &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y, <span class="dt">non_convexity =</span> <span class="fl">3.7</span>, <span class="dt">penalty =</span> <span class="st">&quot;SCAD&quot;</span>)
+ncv_scad &lt;-<span class="st"> </span><span class="kw">ncvreg</span>(x, y, <span class="dt">gamma =</span> <span class="fl">3.7</span>, <span class="dt">penalty =</span> <span class="st">&quot;SCAD&quot;</span>)
+sgd_snet &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y, <span class="dt">non_convexity =</span> <span class="fl">3.7</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">penalty =</span> <span class="st">&quot;SCAD&quot;</span>)
+ncv_snet &lt;-<span class="st"> </span><span class="kw">ncvreg</span>(x, y, <span class="dt">gamma =</span> <span class="fl">3.7</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">penalty =</span> <span class="st">&quot;SCAD&quot;</span>)</code></pre></div>
 <p><img src="_main_files/figure-html/plotscad-1.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plotscad-2.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plotscad-3.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plotscad-4.png" width="50%" style="display: inline-block;" /></p>
 
 </div>
 </div>
-<h3> References</h3>
+<h3> Reference</h3>
 <div id="refs" class="references">
 <div id="ref-breheny2011">
 <p>Breheny, Patrick, and Jian Huang. 2011. “Coordinate Descent Algorithms for Nonconvex Penalized Regression, with Application to Biological Feature Selection.” <em>The Annals of Applied Statistics</em> 5 (1): 232–53.</p>
@@ -241,8 +241,8 @@ gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
-"facebook": true,
-"twitter": true,
+"facebook": false,
+"twitter": false,
 "google": false,
 "linkedin": false,
 "weibo": false,

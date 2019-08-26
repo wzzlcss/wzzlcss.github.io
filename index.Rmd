@@ -4,9 +4,12 @@ author: "Qincheng Lu"
 site: bookdown::gsoc2019
 documentclass: book
 output:
-  bookdown::gitbook: default
+  bookdown::gitbook: 
+    config:
+      sharing:
+        facebook: false
+        twitter: false
 bibliography: [report.bib]
-biblio-style: apalike
 link-citations: yes
 ---
 
@@ -32,6 +35,6 @@ link-citations: yes
 - [Poisson Family and Line-search Procedure](https://github.com/jolars/sgdnet/pull/27)
 
 **Acknowledgements**
-
+<p style="text-align:justify;">
 My mentors gave me many detailed suggestions on statistics and coding, when I encountered obstacles and submitted my work. Their knowledge and working attitude have been encouraging me to do a better job. I am very grateful to work with them through this summer. Apart from my mentors' guidance, I think **sgdnet** itself also helps me a lot, since **sgdnet** is a well designed and clearly documented R package. And finaly, it is my fortune to have this opportunity from the R Project for Statistical Computing and Google. I hope to continue to work for **sgdnet** package.
-
+</p>

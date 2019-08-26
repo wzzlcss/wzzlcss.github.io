@@ -118,7 +118,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.1" data-path="poisson-models.html"><a href="poisson-models.html#overview-1"><i class="fa fa-check"></i><b>5.1</b> Overview</a></li>
 <li class="chapter" data-level="5.2" data-path="poisson-models.html"><a href="poisson-models.html#example"><i class="fa fa-check"></i><b>5.2</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>6</b> References</a></li>
+<li class="chapter" data-level="6" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>6</b> Reference</a></li>
 </ul>
 
       </nav>
@@ -144,7 +144,7 @@ The incremental gradient method SAGA <span class="citation">(Defazio, Bach, and 
 <div id="c-saga" class="section level2">
 <h2><span class="header-section-number">2.1</span> C-SAGA</h2>
 <p style="text-align:justify;">
-C-SAGA has the same algorithmic structure as SAGA, except for that the choice of gradient is cyclic rather than random, which could benefit from cache locality for a certain size of feature matrix. Considering the problem size and cache size, user can enable it by setting <code>cyclic = TRUE</code> in <code>sgdnet( )</code> function, which is <code>FALSE</code> by default.
+C-SAGA has the same algorithmic structure as SAGA, except for that the choice of gradient is cyclic rather than random, which could benefit from cache locality for a certain size of feature matrix. Considering the problem size and cache size, user can enable it by setting <code>cyclic = TRUE</code> in <code>sgdnet()</code> function, which is <code>FALSE</code> by default.
 </p>
 </div>
 <div id="mini-batch-saga" class="section level2">
@@ -193,7 +193,7 @@ epoch =<span class="st"> </span><span class="kw">floor</span>(n_samples<span cla
     <span class="cf">if</span> (<span class="kw">MaxChange</span>(beta)<span class="op">/</span><span class="kw">Max</span>(beta) <span class="op">&lt;</span><span class="st"> </span>thresh)  
       stop <span class="co"># algorithm as converged</span></code></pre></div>
 <p style="text-align:justify;">
-To use mini-batch version of saga, user could set <code>batchsize</code> variable to any integer that less than sample size in <code>sgdnet( )</code> function, which is set to 1 by default.
+To use mini-batch version of saga, user could set <code>batchsize</code> variable to any integer that less than sample size in <code>sgdnet()</code> function, which is set to 1 by default.
 </p>
 </div>
 <div id="simulated-data" class="section level2">
@@ -221,7 +221,7 @@ where <span class="math inline">\(\mathbf{W}\)</span> is a <span class="math inl
 
 </div>
 </div>
-<h3> References</h3>
+<h3> Reference</h3>
 <div id="refs" class="references">
 <div id="ref-defazio2014">
 <p>Defazio, Aaron, Francis Bach, and Simon Lacoste-Julien. 2014. “SAGA: A Fast Incremental Gradient Method with Support for Non-Strongly Convex Composite Objectives.” In <em>Advances in Neural Information Processing Systems 27</em>, 2:1646–54. Montreal, Canada: Curran Associates, Inc.</p>
@@ -254,8 +254,8 @@ gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
-"facebook": true,
-"twitter": true,
+"facebook": false,
+"twitter": false,
 "google": false,
 "linkedin": false,
 "weibo": false,

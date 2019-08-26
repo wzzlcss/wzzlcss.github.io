@@ -1,11 +1,3 @@
-
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
-
 # New SAGA Features
 
 <p style="text-align:justify;">
@@ -15,7 +7,7 @@ The incremental gradient method SAGA [@defazio2014] used in **sgdnet** now suppo
 ## C-SAGA
 
 <p style="text-align:justify;">
-C-SAGA has the same algorithmic structure as SAGA, except for that the choice of gradient is cyclic rather than random, which could benefit from cache locality for a certain size of feature matrix. Considering the problem size and cache size, user can enable it by setting ```cyclic = TRUE``` in ```sgdnet( )``` function, which is ```FALSE``` by default. 
+C-SAGA has the same algorithmic structure as SAGA, except for that the choice of gradient is cyclic rather than random, which could benefit from cache locality for a certain size of feature matrix. Considering the problem size and cache size, user can enable it by setting ```cyclic = TRUE``` in ```sgdnet()``` function, which is ```FALSE``` by default. 
 </p>
 
 ## Mini-batch SAGA
@@ -70,7 +62,7 @@ for i in 1:max_iter
 ```
 
 <p style="text-align:justify;">
-To use mini-batch version of saga, user could set ```batchsize``` variable to any integer that less than sample size in ```sgdnet( )``` function, which is set to 1 by default.
+To use mini-batch version of saga, user could set ```batchsize``` variable to any integer that less than sample size in ```sgdnet()``` function, which is set to 1 by default.
 </p>
 
 ## Simulated Data

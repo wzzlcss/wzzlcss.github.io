@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="nonconvex-penalty.html"/>
-<link rel="next" href="references.html"/>
+<link rel="next" href="reference.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -118,7 +118,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.1" data-path="poisson-models.html"><a href="poisson-models.html#overview-1"><i class="fa fa-check"></i><b>5.1</b> Overview</a></li>
 <li class="chapter" data-level="5.2" data-path="poisson-models.html"><a href="poisson-models.html#example"><i class="fa fa-check"></i><b>5.2</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>6</b> References</a></li>
+<li class="chapter" data-level="6" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>6</b> Reference</a></li>
 </ul>
 
       </nav>
@@ -141,7 +141,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="overview-1" class="section level2">
 <h2><span class="header-section-number">5.1</span> Overview</h2>
 <p style="text-align:justify;">
-Poisson regression via <code>sgdnet( )</code> is now supported by <strong>sgdnet</strong>, which has the following objective function in elastic net regularization:
+Poisson regression via <code>sgdnet()</code> is now supported by <strong>sgdnet</strong>, which has the following objective function in elastic net regularization:
 </p>
 <span class="math display">\[
 -\frac1n \sum_{i=1}^n \Big( y_i (\beta_0 + \beta^\mathsf{T} x_i)
@@ -153,16 +153,16 @@ Poisson regression via <code>sgdnet( )</code> is now supported by <strong>sgdnet
 We use the deviance function for a Poisson distribution <span class="math inline">\(y_i \sim Pois(\mu_i)\)</span> to evaluate model loss:
 </p>
 <p><span class="math display">\[
-2 \sum_{i=1}^n (y_i log \, y_i - y_i log\, \mu_i + \mu_i -y_i)
+2 \sum_{i=1}^n \Big [ y_i log \, (\frac{y_i}{\mu_i}) - (y_i - \mu_i)  \Big ]
 \]</span> where <span class="math inline">\(\mu_i = e^{\beta_0 + \beta^\mathsf{T} x_i}\)</span>.</p>
 <p style="text-align:justify;">
-The Poisson loss function is convex but not Lipschitz-continuous. To guarantee SAGA’s convergence, which rely on derivatives’ Lipschitz-continuity, we will update the approximated Lipschitz constant <span class="math inline">\(L\)</span> while running the algorithm. Starting with an initial estimate <span class="math inline">\(L^{0}\)</span> as the largest sample-wise squared norm of the feature matrix, an invalid <span class="math inline">\(L^{k}\)</span> will be doubled after evaluating <span class="math inline">\(f_i\)</span> with the coefficient <span class="math inline">\(\beta^{k}\)</span> at iteration <span class="math inline">\(k\)</span>, if the following inequality is not satisfied <span class="citation">(Schmidt, Le Roux, and Bach <a href="#ref-schmidt2016">2017</a>)</span>:
+The Poisson loss function is convex but not Lipschitz-continuous. To guarantee SAGA’s convergence, which rely on derivatives’ Lipschitz-continuity, we will update the approximated Lipschitz constant <span class="math inline">\(L\)</span> while running the algorithm. Starting with an initial estimate <span class="math inline">\(L^{0}\)</span> as <span class="math inline">\(L_{\text{max}}\)</span>, which is the largest sample-wise squared norm of the feature matrix, an invalid <span class="math inline">\(L^{k}\)</span> will be doubled after evaluating <span class="math inline">\(f_i\)</span> with the coefficient <span class="math inline">\(\beta_{k}\)</span> at iteration <span class="math inline">\(k\)</span>, if the following inequality is not satisfied <span class="citation">(Schmidt, Le Roux, and Bach <a href="#ref-schmidt2016">2017</a>)</span>:
 </p>
 <span class="math display">\[
-f_{i_{k}} (\beta^{k} - \frac{1}{L^{k}} f^{&#39;}_{i_{k}}(\beta^{k})) \leq f_{i_{k}} (\beta^{k}) - \frac{1}{2L^{k}} \left \| f^{&#39;}_{i_{k}}(\beta^{k}) \right \|^2
+f_{i_{k}} \Big ( (\beta_{0k} + \beta_{k}^\mathsf{T} x_i) - \frac{f^{&#39;}_{i_{k}}(\beta_{0k},\beta_{k})}{L^{k}}  \left \| x_i \right \|^2_{2}  \Big ) \leq f_{i_{k}} (\beta_{0k} + \beta_{k}^\mathsf{T} x_i) - \frac{1}{2L^{k}} \left \| f^{&#39;}_{i_{k}}(\beta_{0k}, \beta_{k}) \right \|^2 \left \| x_i \right \|^2_{2}
 \]</span>
 <p style="text-align:justify;">
-The corresponding cross-validation method via <code>cv_sgdnet( )</code>, as well as making prediction by <code>predict( )</code> and model performance measure by <code>score( )</code> are also avilable in <strong>sgdnet</strong>.
+where the individual norm is precomputed. The corresponding cross-validation method via <code>cv_sgdnet()</code>, as well as making prediction by <code>predict()</code> and model performance measure by <code>score()</code> are also avilable for Poisson in <strong>sgdnet</strong>.
 </p>
 </div>
 <div id="example" class="section level2">
@@ -173,30 +173,18 @@ For illustration, we compare with <a href="https://cran.r-project.org/web/packag
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;caddisfly&quot;</span>)
 x &lt;-<span class="st"> </span>caddisfly<span class="op">$</span>x
 y &lt;-<span class="st"> </span>caddisfly<span class="op">$</span>y
-sfit0 &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y,<span class="dt">family=</span><span class="st">&quot;poisson&quot;</span>,<span class="dt">alpha=</span><span class="dv">0</span>)
-gfit0 &lt;-<span class="st"> </span><span class="kw">glmnet</span>(x, y,<span class="dt">family=</span><span class="st">&quot;poisson&quot;</span>,<span class="dt">alpha=</span><span class="dv">0</span>)</code></pre></div>
+sfit0 &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y, <span class="dt">family =</span> <span class="st">&quot;poisson&quot;</span>, <span class="dt">alpha =</span> <span class="dv">0</span>)
+gfit0 &lt;-<span class="st"> </span><span class="kw">glmnet</span>(x, y, <span class="dt">family =</span> <span class="st">&quot;poisson&quot;</span>, <span class="dt">alpha =</span> <span class="dv">0</span>)</code></pre></div>
 <p><img src="_main_files/figure-html/plot-1.png" width="50%" style="; padding:10px; display: inline-block;" /><img src="_main_files/figure-html/plot-2.png" width="50%" style="; padding:10px; display: inline-block;" /></p>
-<center>
-Poisson model with ridge regression on caddisfly dataset
-</center>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sfit1 &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y,<span class="dt">family=</span><span class="st">&quot;poisson&quot;</span>,<span class="dt">alpha=</span><span class="dv">1</span>)
-gfit1 &lt;-<span class="st"> </span><span class="kw">glmnet</span>(x, y,<span class="dt">family=</span><span class="st">&quot;poisson&quot;</span>,<span class="dt">alpha=</span><span class="dv">1</span>)</code></pre></div>
+<p><left> Poisson model with ridge regression on caddisfly dataset </left></p>
+<p><br /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sfit1 &lt;-<span class="st"> </span><span class="kw">sgdnet</span>(x, y, <span class="dt">family =</span> <span class="st">&quot;poisson&quot;</span>, <span class="dt">alpha =</span> <span class="dv">1</span>)
+gfit1 &lt;-<span class="st"> </span><span class="kw">glmnet</span>(x, y, <span class="dt">family =</span> <span class="st">&quot;poisson&quot;</span>, <span class="dt">alpha =</span> <span class="dv">1</span>)</code></pre></div>
 <p><img src="_main_files/figure-html/plot2-1.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plot2-2.png" width="50%" style="display: inline-block;" /></p>
-<pre><code>#&gt; Warning: package &#39;ncvreg&#39; was built under R version 3.5.2
-#&gt; 
-#&gt; Attaching package: &#39;ncvreg&#39;
-#&gt; The following object is masked _by_ &#39;.GlobalEnv&#39;:
-#&gt; 
-#&gt;     prostate
-#&gt; The following object is masked from &#39;package:sgdnet&#39;:
-#&gt; 
-#&gt;     heart</code></pre>
-<center>
-Poisson model with lasso regression on caddisfly dataset
-</center>
+<p><left> Poisson model with lasso regression on caddisfly dataset </left></p>
 </div>
 </div>
-<h3> References</h3>
+<h3> Reference</h3>
 <div id="refs" class="references">
 <div id="ref-schmidt2016">
 <p>Schmidt, Mark, Nicolas Le Roux, and Francis Bach. 2017. “Minimizing Finite Sums with the Stochastic Average Gradient.” <em>Mathematical Programming</em> 162 (1-2): 83–112.</p>
@@ -208,7 +196,7 @@ Poisson model with lasso regression on caddisfly dataset
         </div>
       </div>
 <a href="nonconvex-penalty.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="reference.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -223,8 +211,8 @@ gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
-"facebook": true,
-"twitter": true,
+"facebook": false,
+"twitter": false,
 "google": false,
 "linkedin": false,
 "weibo": false,
