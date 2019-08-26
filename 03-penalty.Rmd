@@ -4,7 +4,7 @@
 ## Introduction
 
 <p style="text-align:justify;">
-In addition to lasso, ridge and elastic net penalty, **sgdnet** also fits along regularization path for linear regression using nonconvex penalties, which are minimax concave penalty (MCP) [@zhang2010] and smoothly clipped absolute penalty (SCAD) [@fan2001]. </p>
+In addition to lasso, ridge and elastic net penalty, **sgdnet** also fits along regularization path for gaussian regression using nonconvex penalties, which are minimax concave penalty (MCP) [@zhang2010] and smoothly clipped absolute penalty (SCAD) [@fan2001]. </p>
 
 <p style="text-align:justify;">
 The ridge part in **sgdnet** use scale update $\beta^{k + n} = \beta^{k} \prod _{i = 1}^{n}(1- \eta(1-\alpha) \lambda)$, where $\lambda$ is the regularization strength, $\alpha$ is elastic net mixing parameter and $\eta$ is the step size. Other penalties are applied via a proximal step at each iteration from the coefficient $\beta^{k+\frac{1}{2}}$ after the average gradient step. The proximal step solves a minimization problem:

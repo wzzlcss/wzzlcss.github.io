@@ -139,7 +139,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="new-saga-features" class="section level1">
 <h1><span class="header-section-number">2</span> New SAGA Features</h1>
 <p style="text-align:justify;">
-The incremental gradient method SAGA <span class="citation">(Defazio, Bach, and Lacoste-Julien <a href="#ref-defazio2014">2014</a>)</span> used in <strong>sgdnet</strong> now supports two recently proposed methods for performance enhancement, they are C-SAGA <span class="citation">(Park and Ryu <a href="#ref-park2018">2018</a>)</span> and mini-batch SAGA <span class="citation">(Gazagnadou, Gower, and Salmon <a href="#ref-Gazagnadou2019">2019</a>)</span>, as well as specifying observation weights.
+The incremental gradient method SAGA <span class="citation">(Defazio, Bach, and Lacoste-Julien <a href="#ref-defazio2014">2014</a>)</span> used in <strong>sgdnet</strong> now supports two recently proposed methods for performance enhancement, they are C-SAGA <span class="citation">(Park and Ryu <a href="#ref-park2018">2018</a>)</span> and mini-batch SAGA <span class="citation">(Gazagnadou, Gower, and Salmon <a href="#ref-Gazagnadou2019">2019</a>)</span>, as well as adding observation weights.
 </p>
 <div id="c-saga" class="section level2">
 <h2><span class="header-section-number">2.1</span> C-SAGA</h2>
@@ -150,7 +150,7 @@ C-SAGA has the same algorithmic structure as SAGA, except for that the choice of
 <div id="mini-batch-saga" class="section level2">
 <h2><span class="header-section-number">2.2</span> Mini-batch SAGA</h2>
 <p style="text-align:justify;">
-The JackSketch version of b-nice SAGA will sample a fresh batch batch without replacement at each iteration. Then use this batch of gradient to update the estimation of average gradient and the gradient table. Compared with original <a href="https://jolars.github.io/sgdnet/articles/algorithm.html">saga</a>, we could have a look at mini-batch’s implementation in <strong>sgdnet</strong>
+The JackSketch version of b-nice SAGA will sample a fresh batch without replacement at each iteration. Then use this batch of gradients to update the estimation of average gradient and the gradient table. Compared with original <a href="https://jolars.github.io/sgdnet/articles/algorithm.html">saga</a>, we could have a look at mini-batch’s implementation in <strong>sgdnet</strong>
 </p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y           response vector of size n
 X           a columnwsie p by n feature matrix
@@ -161,8 +161,8 @@ max_iter    maximum number of outer iterations
 eta         the step size
 
 epoch =<span class="st"> </span><span class="kw">floor</span>(n_samples<span class="op">/</span>B)
-<span class="cf">for</span> i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>max_iter
 
+<span class="cf">for</span> i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>max_iter
     <span class="co"># a index matrix of B by epoch size</span>
     ind &lt;-<span class="st"> </span><span class="kw">Ind</span>(n_sample, B)
     
@@ -202,14 +202,14 @@ To use mini-batch version of saga, user could set <code>batchsize</code> variabl
 Here is a benchmark <a href="https://github.com/wzzlcss/wzzlcss.github.io/blob/master/Rscript/2.3/artifical_bench.R">(R Sript)</a> with artificial data of size 100 to illustrate C-SAGA and mini-batch SAGA’s features, where the batch size is fixed to 10 and <span class="math inline">\(\lambda = 0.01\)</span>. The C-SAGA is more efficient at evaluating each epoch.
 </p>
 <div class="figure">
-<img src="figure/artifical_data_bench.png" alt="Caption for the picture." />
-<p class="caption">Caption for the picture.</p>
+<img src="figure/artifical_data_bench.png" />
+
 </div>
 </div>
 <div id="observation-weight" class="section level2">
 <h2><span class="header-section-number">2.4</span> Observation weight</h2>
 <p style="text-align:justify;">
-The regularized generalized linear model with observation weight is of the type
+The regularized generalized linear model with observation weights is of the type
 </p>
 <span class="math display">\[
 \min_{\beta_0, \beta} \left\{-\frac1n \mathcal{L}\left(\beta_0,\beta; \mathbf{y}, \mathbf{W} \mathbf{X}\right)+ h_{\lambda}(\beta) \right \},

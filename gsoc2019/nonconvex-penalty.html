@@ -141,7 +141,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="introduction" class="section level2">
 <h2><span class="header-section-number">4.1</span> Introduction</h2>
 <p style="text-align:justify;">
-In addition to lasso, ridge and elastic net penalty, <strong>sgdnet</strong> also fits along regularization path for linear regression using nonconvex penalties, which are minimax concave penalty (MCP) <span class="citation">(Zhang <a href="#ref-zhang2010">2010</a>)</span> and smoothly clipped absolute penalty (SCAD) <span class="citation">(Fan and Li <a href="#ref-fan2001">2001</a>)</span>.
+In addition to lasso, ridge and elastic net penalty, <strong>sgdnet</strong> also fits along regularization path for gaussian regression using nonconvex penalties, which are minimax concave penalty (MCP) <span class="citation">(Zhang <a href="#ref-zhang2010">2010</a>)</span> and smoothly clipped absolute penalty (SCAD) <span class="citation">(Fan and Li <a href="#ref-fan2001">2001</a>)</span>.
 </p>
 <p style="text-align:justify;">
 The ridge part in <strong>sgdnet</strong> use scale update <span class="math inline">\(\beta^{k + n} = \beta^{k} \prod _{i = 1}^{n}(1- \eta(1-\alpha) \lambda)\)</span>, where <span class="math inline">\(\lambda\)</span> is the regularization strength, <span class="math inline">\(\alpha\)</span> is elastic net mixing parameter and <span class="math inline">\(\eta\)</span> is the step size. Other penalties are applied via a proximal step at each iteration from the coefficient <span class="math inline">\(\beta^{k+\frac{1}{2}}\)</span> after the average gradient step. The proximal step solves a minimization problem:
