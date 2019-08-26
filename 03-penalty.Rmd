@@ -23,7 +23,7 @@ The definition for minimax concave penalty for each element of coefficient $\bet
 </p>
 
 $$\begin{equation} p_{\lambda, \gamma}(\beta_j) = \begin{cases}
-\lambda \beta_j - \frac{\beta_j^2}{2 \gamma} & \text{if} \,\, |\beta_j| \leq \gamma \lambda \\ \frac{1}{2} \gamma \lambda^2 & \text{otherwise}
+\lambda \beta_j - \frac{\beta_j^2}{2 \gamma} & \text{if} \,\, |\beta_j| \leq \gamma \lambda \\ \frac{1}{2} \gamma \lambda^2 & \text{otherwise.}
 \end{cases}\end{equation}$$
 
 <p style="text-align:justify;">
@@ -83,7 +83,7 @@ plot(ncv_mnet, log.l = TRUE)
 Following the same notation, the definition for smoothly clipped absolute penalty for each element of coefficient $\beta$ is given by:
 </p>
 
-$$\begin{equation} p_{\lambda, \gamma}(\beta_j) = \begin{cases} \lambda \beta_j & \text{if} \, \,|\beta_j| \leq \lambda\\ \frac{\gamma \lambda \beta_j - \frac{1}{2} (\beta_j^2 + \lambda^2)}{\gamma - 1} \gamma \lambda^2 & \text{if} \,\, \lambda < |\beta_j| \leq \gamma \lambda \\ \frac{\lambda^2 (\gamma^2 - 1)}{2(\gamma - 1)} & \text{therwise} \end{cases}  \end{equation}$$
+$$\begin{equation} p_{\lambda, \gamma}(\beta_j) = \begin{cases} \lambda \beta_j & \text{if} \, \,|\beta_j| \leq \lambda\\ \frac{\gamma \lambda \beta_j - \frac{1}{2} (\beta_j^2 + \lambda^2)}{\gamma - 1} \gamma \lambda^2 & \text{if} \,\, \lambda < |\beta_j| \leq \gamma \lambda \\ \frac{\lambda^2 (\gamma^2 - 1)}{2(\gamma - 1)} & \text{otherwise.} \end{cases}  \end{equation}$$
 
 <p style="text-align:justify;">
 where $\lambda \geq 0$ and $\gamma > 2$. The proximal operator for SCAD [@zhu2016] of strength $\alpha \lambda$, with ridge of strength $(1-\alpha)\lambda$ can be solved as:
@@ -92,7 +92,7 @@ where $\lambda \geq 0$ and $\gamma > 2$. The proximal operator for SCAD [@zhu201
 $$\begin{equation} \beta_j \leftarrow \begin{cases} 
 \frac{\Big ( 1-\eta \alpha \lambda \Big )_{+} \beta_j}{1+\eta(1-\alpha)\lambda} & \text{if} \, \,|\beta_j| \leq \alpha \lambda + \eta \alpha \lambda ( 1 + (1-\alpha) \lambda)\\ 
 \frac{\Big ( 1 - \frac{\gamma}{ \gamma - 1} \eta \alpha \lambda \Big)_{+} \beta_j}{1- \frac{\eta}{\gamma - 1} + \eta (1- \alpha) \lambda} & \text{if} \,\, \alpha \lambda + \eta \alpha \lambda ( 1 + (1-\alpha) \lambda) < |\beta_j| \leq \gamma \alpha \lambda ( 1 + \eta (1 - \alpha) \lambda) \\ 
-\frac{\beta_j}{1+\eta(1-\alpha)\lambda} & \text{therwise} \end{cases}  \end{equation}$$
+\frac{\beta_j}{1+\eta(1-\alpha)\lambda} & \text{otherwise.} \end{cases}  \end{equation}$$
 
 <p style="text-align:justify;">
 Similar to MCP, SCAD begins by applying lasso's penalization rate, and reduces the rate to 0 as $\beta_j$ gets away from 0. The difference is in the way to make this transition. **sgdnet** has a default nonconvexity parameter $\gamma = 3.7$. It can be specified by the ```non_convexity``` variable in ```sgdnet()``` function.
