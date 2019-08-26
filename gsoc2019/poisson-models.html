@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5 Poisson Models | A Book</title>
-  <meta name="description" content="5 Poisson Models | A Book" />
+  <title>5 Poisson Models | GSoC 2019 Final Report</title>
+  <meta name="description" content="5 Poisson Models | GSoC 2019 Final Report" />
   <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5 Poisson Models | A Book" />
+  <meta property="og:title" content="5 Poisson Models | GSoC 2019 Final Report" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5 Poisson Models | A Book" />
+  <meta name="twitter:title" content="5 Poisson Models | GSoC 2019 Final Report" />
   
   
   
@@ -98,7 +98,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Hello World</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a></li>
 <li class="chapter" data-level="2" data-path="new-saga-features.html"><a href="new-saga-features.html"><i class="fa fa-check"></i><b>2</b> New SAGA Features</a><ul>
 <li class="chapter" data-level="2.1" data-path="new-saga-features.html"><a href="new-saga-features.html#c-saga"><i class="fa fa-check"></i><b>2.1</b> C-SAGA</a></li>
 <li class="chapter" data-level="2.2" data-path="new-saga-features.html"><a href="new-saga-features.html#mini-batch-saga"><i class="fa fa-check"></i><b>2.2</b> Mini-batch SAGA</a></li>
@@ -115,7 +115,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.3" data-path="nonconvex-penalty.html"><a href="nonconvex-penalty.html#scad"><i class="fa fa-check"></i><b>4.3</b> SCAD</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="poisson-models.html"><a href="poisson-models.html"><i class="fa fa-check"></i><b>5</b> Poisson Models</a><ul>
-<li class="chapter" data-level="5.1" data-path="poisson-models.html"><a href="poisson-models.html#overview"><i class="fa fa-check"></i><b>5.1</b> Overview</a></li>
+<li class="chapter" data-level="5.1" data-path="poisson-models.html"><a href="poisson-models.html#overview-1"><i class="fa fa-check"></i><b>5.1</b> Overview</a></li>
 <li class="chapter" data-level="5.2" data-path="poisson-models.html"><a href="poisson-models.html#example"><i class="fa fa-check"></i><b>5.2</b> Example</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>6</b> References</a></li>
@@ -128,7 +128,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Book</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GSoC 2019 Final Report</a>
           </h1>
         </div>
 
@@ -138,7 +138,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="poisson-models" class="section level1">
 <h1><span class="header-section-number">5</span> Poisson Models</h1>
-<div id="overview" class="section level2">
+<div id="overview-1" class="section level2">
 <h2><span class="header-section-number">5.1</span> Overview</h2>
 <p style="text-align:justify;">
 Poisson regression via <code>sgdnet( )</code> is now supported by <strong>sgdnet</strong>, which has the following objective function in elastic net regularization:
@@ -156,10 +156,10 @@ We use the deviance function for a Poisson distribution <span class="math inline
 2 \sum_{i=1}^n (y_i log \, y_i - y_i log\, \mu_i + \mu_i -y_i)
 \]</span> where <span class="math inline">\(\mu_i = e^{\beta_0 + \beta^\mathsf{T} x_i}\)</span>.</p>
 <p style="text-align:justify;">
-The Poisson loss function is convex but not Lipschitz-continuous. To guarantee SAGA’s convergence, which rely on derivatives’ Lipschitz-continuity, we will update the approximated Lipschitz constant <span class="math inline">\(L\)</span> while running the algorithm. Starting with an initial estimate <span class="math inline">\(L^{0}\)</span> as the largest sample-wise squared norm of the feature matrix, an invalid <span class="math inline">\(L^{k}\)</span> will be doubled after evaluating <span class="math inline">\(f_i\)</span> with the coefficient <span class="math inline">\(\omega^{k}\)</span> at iteration <span class="math inline">\(k\)</span>, if the following inequality is not satisfied <span class="citation">(Schmidt, Le Roux, and Bach <a href="#ref-schmidt2016">2017</a>)</span>:
+The Poisson loss function is convex but not Lipschitz-continuous. To guarantee SAGA’s convergence, which rely on derivatives’ Lipschitz-continuity, we will update the approximated Lipschitz constant <span class="math inline">\(L\)</span> while running the algorithm. Starting with an initial estimate <span class="math inline">\(L^{0}\)</span> as the largest sample-wise squared norm of the feature matrix, an invalid <span class="math inline">\(L^{k}\)</span> will be doubled after evaluating <span class="math inline">\(f_i\)</span> with the coefficient <span class="math inline">\(\beta^{k}\)</span> at iteration <span class="math inline">\(k\)</span>, if the following inequality is not satisfied <span class="citation">(Schmidt, Le Roux, and Bach <a href="#ref-schmidt2016">2017</a>)</span>:
 </p>
 <span class="math display">\[
-f_{i_{k}} (\omega^{k} - \frac{1}{L^{k}} f^{&#39;}_{i_{k}}(\omega^{k})) \leq f_{i_{k}} (\omega^{k}) - \frac{1}{2L^{k}} \left \| f^{&#39;}_{i_{k}}(\omega^{k}) \right \|^2
+f_{i_{k}} (\beta^{k} - \frac{1}{L^{k}} f^{&#39;}_{i_{k}}(\beta^{k})) \leq f_{i_{k}} (\beta^{k}) - \frac{1}{2L^{k}} \left \| f^{&#39;}_{i_{k}}(\beta^{k}) \right \|^2
 \]</span>
 <p style="text-align:justify;">
 The corresponding cross-validation method via <code>cv_sgdnet( )</code>, as well as making prediction by <code>predict( )</code> and model performance measure by <code>score( )</code> are also avilable in <strong>sgdnet</strong>.
@@ -168,7 +168,7 @@ The corresponding cross-validation method via <code>cv_sgdnet( )</code>, as well
 <div id="example" class="section level2">
 <h2><span class="header-section-number">5.2</span> Example</h2>
 <p style="text-align:justify;">
-For illustration, we compare with glmnet using the fitting results of caddisfly dataset along regularization path. This dataset describes the abundances of one of 17 species in <a href="https://pbil.univ-lyon1.fr/ADE-4/ade4-html/trichometeo.html">original dataset</a>, which is Stactobiella risi, and 12 meteorological features that may influence its presence during 49 trapping night.
+For illustration, we compare with <a href="https://cran.r-project.org/web/packages/glmnet/index.html"><strong>glmnet</strong></a> using the fitting results of caddisfly dataset along regularization path. This dataset describes the abundances of one of 17 species in <a href="https://pbil.univ-lyon1.fr/ADE-4/ade4-html/trichometeo.html">original dataset</a>, which is Stactobiella risi, and 12 meteorological features that may influence its presence during 49 trapping night.
 </p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;caddisfly&quot;</span>)
 x &lt;-<span class="st"> </span>caddisfly<span class="op">$</span>x

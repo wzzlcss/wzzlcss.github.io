@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3 Optimize mini-batching | A Book</title>
-  <meta name="description" content="3 Optimize mini-batching | A Book" />
+  <title>3 Optimize mini-batching | GSoC 2019 Final Report</title>
+  <meta name="description" content="3 Optimize mini-batching | GSoC 2019 Final Report" />
   <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3 Optimize mini-batching | A Book" />
+  <meta property="og:title" content="3 Optimize mini-batching | GSoC 2019 Final Report" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3 Optimize mini-batching | A Book" />
+  <meta name="twitter:title" content="3 Optimize mini-batching | GSoC 2019 Final Report" />
   
   
   
@@ -98,7 +98,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Hello World</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a></li>
 <li class="chapter" data-level="2" data-path="new-saga-features.html"><a href="new-saga-features.html"><i class="fa fa-check"></i><b>2</b> New SAGA Features</a><ul>
 <li class="chapter" data-level="2.1" data-path="new-saga-features.html"><a href="new-saga-features.html#c-saga"><i class="fa fa-check"></i><b>2.1</b> C-SAGA</a></li>
 <li class="chapter" data-level="2.2" data-path="new-saga-features.html"><a href="new-saga-features.html#mini-batch-saga"><i class="fa fa-check"></i><b>2.2</b> Mini-batch SAGA</a></li>
@@ -115,7 +115,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.3" data-path="nonconvex-penalty.html"><a href="nonconvex-penalty.html#scad"><i class="fa fa-check"></i><b>4.3</b> SCAD</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="poisson-models.html"><a href="poisson-models.html"><i class="fa fa-check"></i><b>5</b> Poisson Models</a><ul>
-<li class="chapter" data-level="5.1" data-path="poisson-models.html"><a href="poisson-models.html#overview"><i class="fa fa-check"></i><b>5.1</b> Overview</a></li>
+<li class="chapter" data-level="5.1" data-path="poisson-models.html"><a href="poisson-models.html#overview-1"><i class="fa fa-check"></i><b>5.1</b> Overview</a></li>
 <li class="chapter" data-level="5.2" data-path="poisson-models.html"><a href="poisson-models.html#example"><i class="fa fa-check"></i><b>5.2</b> Example</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>6</b> References</a></li>
@@ -128,7 +128,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Book</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GSoC 2019 Final Report</a>
           </h1>
         </div>
 
@@ -155,7 +155,7 @@ The enhancement for SAGA performance by mini-batching depends on two things. Fir
 where the ridge strength <span class="math inline">\(\lambda\)</span> has been added to every smoothness constant, and the mean smoothness constant <span class="math inline">\(\overline{L}\)</span> is replaced by <span class="math inline">\(L\)</span>, which is the largest eigenvalue of <span class="math inline">\(\mathbf{X}^T \mathbf{X}\)</span>, if was significantly larger than the rest of eigenvalues.
 </p>
 <p style="text-align:justify;">
-Use ridge regression with abalone dataset (4177 samples, 9 features) as an example (<span class="math inline">\(\lambda = 10\)</span>). Under <span class="math inline">\(\eta_{\text{Defazio}}\)</span>, the complexity grows with <span class="math inline">\(b\)</span>, while with <span class="math inline">\(\eta_{\text{optimal}}\)</span>, it decreases to a lower level. The red line indicates <span class="math inline">\(\mathcal{B}^*\)</span> for this problem.
+Use ridge regression with abalone dataset (4177 samples, 9 features) as an example (<span class="math inline">\(\lambda = 10\)</span>) <a href="https://github.com/wzzlcss/wzzlcss.github.io/blob/master/Rscript/3.1/part%201/complexity_bench.R">(R Sript)</a>. Under <span class="math inline">\(\eta_{\text{Defazio}}\)</span>, the complexity grows with <span class="math inline">\(b\)</span>, while with <span class="math inline">\(\eta_{\text{optimal}}\)</span>, it decreases to a lower level. The red line indicates <span class="math inline">\(\mathcal{B}^*\)</span> for this problem.
 </p>
 <div class="figure">
 <img src="figure/stepsize_opt.png" />
@@ -172,7 +172,7 @@ We could have a look at <span class="math inline">\(\mathcal{B}^*\)</span> and <
 <div id="benchmark" class="section level2">
 <h2><span class="header-section-number">3.2</span> Benchmark</h2>
 <p style="text-align:justify;">
-This benchmark [Sript] was run on <a href="https://docs.computecanada.ca/wiki/Cedar">Cedar of Canada Compute</a>. It is a comparison of the returned epoch loss and elapsed time of one run of <span class="math inline">\((b = 1, \eta_{\text{Defazio}})\)</span> and <span class="math inline">\((b = \mathcal{B}^*, \eta_{\text{optimal}})\)</span>, by setting <code>options(sgdnet.debug = TRUE)</code>. These datasets is publicly accessible, they are the testing set of <a href="https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/regression.html#YearPredictionMSD">YearPredictionMSD</a>, scaled version of <a href="https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#covtype.binary">covtype.binary</a>, <a href="https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#ijcnn1">ijcnn1</a> from LIBSVM and unscaled version of <a href="https://archive.ics.uci.edu/ml/datasets/Relative+location+of+CT+slices+on+axial+axis">slice</a> from UCI.
+This benchmark <a href="https://github.com/wzzlcss/wzzlcss.github.io/blob/master/Rscript/3.1/part%202/pass_bench.R">(R Sript)</a> was run on <a href="https://docs.computecanada.ca/wiki/Cedar">Cedar of Canada Compute</a>. It is a comparison of the returned epoch loss and elapsed time of one run of <span class="math inline">\((b = 1, \eta_{\text{Defazio}})\)</span> and <span class="math inline">\((b = \mathcal{B}^*, \eta_{\text{optimal}})\)</span>, by setting <code>options(sgdnet.debug = TRUE)</code>. These datasets is publicly accessible, they are the testing set of <a href="https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/regression.html#YearPredictionMSD">YearPredictionMSD</a>, scaled version of <a href="https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#covtype.binary">covtype.binary</a>, <a href="https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#ijcnn1">ijcnn1</a> from LIBSVM and unscaled version of <a href="https://archive.ics.uci.edu/ml/datasets/Relative+location+of+CT+slices+on+axial+axis">slice</a> from UCI.
 </p>
 <table>
 <thead>

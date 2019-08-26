@@ -76,7 +76,7 @@ To use mini-batch version of saga, user could set ```batchsize``` variable to an
 ## Simulated Data
 
 <p style="text-align:justify;">
-Here is a benchmark [Sript] with artificial data of size 100 to illustrate C-SAGA and mini-batch SAGA's features, where the batch size is fixed to 10 and $\lambda = 0.01$. The C-SAGA is more efficient at evaluating each epoch.
+Here is a benchmark [(R Sript)](https://github.com/wzzlcss/wzzlcss.github.io/blob/master/Rscript/2.3/artifical_bench.R) with artificial data of size 100 to illustrate C-SAGA and mini-batch SAGA's features, where the batch size is fixed to 10 and $\lambda = 0.01$. The C-SAGA is more efficient at evaluating each epoch.
 </p>
 
 ![Caption for the picture.](./figure/artifical_data_bench.png)

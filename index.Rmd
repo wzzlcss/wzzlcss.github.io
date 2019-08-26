@@ -1,5 +1,5 @@
 ---
-title: "A Book"
+title: "GSoC 2019 Final Report"
 author: "Qincheng Lu"
 site: bookdown::gsoc2019
 documentclass: book
@@ -10,9 +10,28 @@ biblio-style: apalike
 link-citations: yes
 ---
 
-# Hello World
+# Overview
 
-Hi.
 
-Bye.
+**Project title**  sgdnet: Efficient Regularized GLMs for Big Data
+
+**Student**  Qincheng Lu
+
+**Mentors**  Michael Weylandt, Johan Larsson and Toby Dylan Hocking
+
+**Contribution**
+
+- [Mini-batch and Cyclic SAGA](https://github.com/jolars/sgdnet/pull/24)
+
+- [Observation Weights](https://github.com/jolars/sgdnet/pull/29)
+
+- [Optimal Batch Size and Step Size](https://github.com/jolars/sgdnet/pull/28)
+
+- [Nonconvex Penalty: MCP and SCAD](https://github.com/jolars/sgdnet/pull/26)
+
+- [Poisson Family and Line-search Procedure](https://github.com/jolars/sgdnet/pull/27)
+
+**Acknowledgements**
+
+My mentors gave me many detailed suggestions on statistics and coding, when I encountered obstacles and submitted my work. Their knowledge and working attitude have been encouraging me to do a better job. I am very grateful to work with them through this summer. Apart from my mentors' guidance, I think **sgdnet** itself also helps me a lot, since **sgdnet** is a well designed and clearly documented R package. And finaly, it is my fortune to have this opportunity from the R Project for Statistical Computing and Google.
 

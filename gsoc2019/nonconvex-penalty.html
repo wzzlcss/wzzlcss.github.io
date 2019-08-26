@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Nonconvex Penalty | A Book</title>
-  <meta name="description" content="4 Nonconvex Penalty | A Book" />
+  <title>4 Nonconvex Penalty | GSoC 2019 Final Report</title>
+  <meta name="description" content="4 Nonconvex Penalty | GSoC 2019 Final Report" />
   <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Nonconvex Penalty | A Book" />
+  <meta property="og:title" content="4 Nonconvex Penalty | GSoC 2019 Final Report" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Nonconvex Penalty | A Book" />
+  <meta name="twitter:title" content="4 Nonconvex Penalty | GSoC 2019 Final Report" />
   
   
   
@@ -98,7 +98,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Hello World</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a></li>
 <li class="chapter" data-level="2" data-path="new-saga-features.html"><a href="new-saga-features.html"><i class="fa fa-check"></i><b>2</b> New SAGA Features</a><ul>
 <li class="chapter" data-level="2.1" data-path="new-saga-features.html"><a href="new-saga-features.html#c-saga"><i class="fa fa-check"></i><b>2.1</b> C-SAGA</a></li>
 <li class="chapter" data-level="2.2" data-path="new-saga-features.html"><a href="new-saga-features.html#mini-batch-saga"><i class="fa fa-check"></i><b>2.2</b> Mini-batch SAGA</a></li>
@@ -115,7 +115,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.3" data-path="nonconvex-penalty.html"><a href="nonconvex-penalty.html#scad"><i class="fa fa-check"></i><b>4.3</b> SCAD</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="poisson-models.html"><a href="poisson-models.html"><i class="fa fa-check"></i><b>5</b> Poisson Models</a><ul>
-<li class="chapter" data-level="5.1" data-path="poisson-models.html"><a href="poisson-models.html#overview"><i class="fa fa-check"></i><b>5.1</b> Overview</a></li>
+<li class="chapter" data-level="5.1" data-path="poisson-models.html"><a href="poisson-models.html#overview-1"><i class="fa fa-check"></i><b>5.1</b> Overview</a></li>
 <li class="chapter" data-level="5.2" data-path="poisson-models.html"><a href="poisson-models.html#example"><i class="fa fa-check"></i><b>5.2</b> Example</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>6</b> References</a></li>
@@ -128,7 +128,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Book</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GSoC 2019 Final Report</a>
           </h1>
         </div>
 
@@ -164,7 +164,7 @@ where <span class="math inline">\(\lambda \geq 0\)</span> is the regularization 
 </p>
 <p><span class="math display">\[\begin{equation} \beta_j \leftarrow \begin{cases} \frac{ \Big (1 - \eta \alpha \lambda \Big )_{+} \beta_j}{1 + \eta (1-\alpha)\lambda-\frac{\eta}{\gamma}} &amp; \text{if} \,\, \beta_j \leq \gamma \alpha \lambda \\ \frac{\beta_j}{1+\eta(1-\alpha)\lambda} &amp; \text{otherwise}. \end{cases} \end{equation}\]</span></p>
 <p style="text-align:justify;">
-MCP begins by applying the same rate of penalization as lasso, but continuously relaxes that penalization until <span class="math inline">\(\beta_j\)</span> becomes large <span class="citation">(Breheny and Huang <a href="#ref-breheny2011">2011</a>)</span>. When <span class="math inline">\(\alpha = 0\)</span>, this becomes the proximal updates for ridge <span class="citation">(Friedman, Hastie, and Tibshirani <a href="#ref-friedman2010">2010</a>)</span>. For MCP, <strong>sgdnet</strong> set the default noncovexity parameter <span class="math inline">\(\gamma\)</span> to <span class="math inline">\(3\)</span>. Here we use the example from <a href="http://pbreheny.github.io/ncvreg/"><strong>ncvreg</strong></a> to demostrate its usage.
+MCP begins by applying the same rate of penalization as lasso, but continuously relaxes that penalization until <span class="math inline">\(\beta_j\)</span> becomes large <span class="citation">(Breheny and Huang <a href="#ref-breheny2011">2011</a>)</span>. When <span class="math inline">\(\alpha = 0\)</span>, this becomes the proximal updates for ridge <span class="citation">(Friedman, Hastie, and Tibshirani <a href="#ref-friedman2010">2010</a>)</span>. For MCP, <strong>sgdnet</strong> set the default noncovexity parameter <span class="math inline">\(\gamma\)</span> to <span class="math inline">\(3\)</span>. Here we use the example from <a href="https://cran.r-project.org/web/packages/ncvreg/index.html"><strong>ncvreg</strong></a> to demostrate its usage.
 </p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(prostate)
 x &lt;-<span class="st"> </span>prostate<span class="op">$</span>x

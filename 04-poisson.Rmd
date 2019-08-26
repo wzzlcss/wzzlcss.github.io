@@ -23,11 +23,11 @@ $$
 where $\mu_i = e^{\beta_0 + \beta^\mathsf{T} x_i}$.
 
 <p style="text-align:justify;">
-The Poisson loss function is convex but not Lipschitz-continuous. To guarantee SAGA's convergence, which rely on derivatives' Lipschitz-continuity, we will update the approximated Lipschitz constant $L$ while running the algorithm. Starting with an initial estimate $L^{0}$ as the largest sample-wise squared norm of the feature matrix, an invalid $L^{k}$ will be doubled after evaluating $f_i$ with the coefficient $\omega^{k}$ at iteration $k$, if the following inequality is not satisfied [@schmidt2016]:
+The Poisson loss function is convex but not Lipschitz-continuous. To guarantee SAGA's convergence, which rely on derivatives' Lipschitz-continuity, we will update the approximated Lipschitz constant $L$ while running the algorithm. Starting with an initial estimate $L^{0}$ as the largest sample-wise squared norm of the feature matrix, an invalid $L^{k}$ will be doubled after evaluating $f_i$ with the coefficient $\beta^{k}$ at iteration $k$, if the following inequality is not satisfied [@schmidt2016]:
 </p>
 
 $$
-f_{i_{k}} (\omega^{k} - \frac{1}{L^{k}} f^{'}_{i_{k}}(\omega^{k})) \leq f_{i_{k}} (\omega^{k}) - \frac{1}{2L^{k}} \left \| f^{'}_{i_{k}}(\omega^{k}) \right \|^2
+f_{i_{k}} (\beta^{k} - \frac{1}{L^{k}} f^{'}_{i_{k}}(\beta^{k})) \leq f_{i_{k}} (\beta^{k}) - \frac{1}{2L^{k}} \left \| f^{'}_{i_{k}}(\beta^{k}) \right \|^2
 $$
 <p style="text-align:justify;">
 The corresponding cross-validation method via ```cv_sgdnet( )```, as well as making prediction by ```predict( )``` and model performance measure by ```score( )``` are also avilable in **sgdnet**.
@@ -36,7 +36,7 @@ The corresponding cross-validation method via ```cv_sgdnet( )```, as well as mak
 ## Example
 
 <p style="text-align:justify;">
-For illustration, we compare with glmnet using the fitting results of caddisfly dataset along regularization path. This dataset describes the abundances of one of 17 species in [original dataset](https://pbil.univ-lyon1.fr/ADE-4/ade4-html/trichometeo.html), which is Stactobiella risi, and 12 meteorological features that may influence its presence during 49 trapping night.
+For illustration, we compare with [**glmnet**](https://cran.r-project.org/web/packages/glmnet/index.html) using the fitting results of caddisfly dataset along regularization path. This dataset describes the abundances of one of 17 species in [original dataset](https://pbil.univ-lyon1.fr/ADE-4/ade4-html/trichometeo.html), which is Stactobiella risi, and 12 meteorological features that may influence its presence during 49 trapping night.
 </p>
 
 ```{r echo = FALSE, message = FALSE}

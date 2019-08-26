@@ -22,7 +22,7 @@ where the ridge strength $\lambda$ has been added to every smoothness constant, 
 </p>
 
 <p style="text-align:justify;">
-Use ridge regression with abalone dataset (4177 samples, 9 features) as an example ($\lambda = 10$). Under $\eta_{\text{Defazio}}$, the complexity grows with $b$, while with $\eta_{\text{optimal}}$, it decreases to a lower level. The red line indicates $\mathcal{B}^*$ for this problem.
+Use ridge regression with abalone dataset (4177 samples, 9 features) as an example ($\lambda = 10$) [(R Sript)](https://github.com/wzzlcss/wzzlcss.github.io/blob/master/Rscript/3.1/part%201/complexity_bench.R). Under $\eta_{\text{Defazio}}$, the complexity grows with $b$, while with $\eta_{\text{optimal}}$, it decreases to a lower level. The red line indicates $\mathcal{B}^*$ for this problem.
 </p>
 
 ![](./figure/stepsize_opt.png)
@@ -36,7 +36,7 @@ We could have a look at $\mathcal{B}^*$ and $\eta_{\text{optimal}}$ along regula
 ## Benchmark
 
 <p style="text-align:justify;">
-This benchmark [Sript] was run on [Cedar of Canada Compute](https://docs.computecanada.ca/wiki/Cedar). It is a comparison of the returned epoch loss and elapsed time of one run of $(b = 1, \eta_{\text{Defazio}})$ and $(b = \mathcal{B}^*, \eta_{\text{optimal}})$, by setting ```options(sgdnet.debug = TRUE)```. These datasets is publicly accessible, they are the testing set of [YearPredictionMSD](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/regression.html#YearPredictionMSD), scaled version of [covtype.binary](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#covtype.binary), [ijcnn1](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#ijcnn1) from LIBSVM and unscaled version of [slice](https://archive.ics.uci.edu/ml/datasets/Relative+location+of+CT+slices+on+axial+axis) from UCI. 
+This benchmark [(R Sript)](https://github.com/wzzlcss/wzzlcss.github.io/blob/master/Rscript/3.1/part%202/pass_bench.R) was run on [Cedar of Canada Compute](https://docs.computecanada.ca/wiki/Cedar). It is a comparison of the returned epoch loss and elapsed time of one run of $(b = 1, \eta_{\text{Defazio}})$ and $(b = \mathcal{B}^*, \eta_{\text{optimal}})$, by setting ```options(sgdnet.debug = TRUE)```. These datasets is publicly accessible, they are the testing set of [YearPredictionMSD](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/regression.html#YearPredictionMSD), scaled version of [covtype.binary](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#covtype.binary), [ijcnn1](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#ijcnn1) from LIBSVM and unscaled version of [slice](https://archive.ics.uci.edu/ml/datasets/Relative+location+of+CT+slices+on+axial+axis) from UCI. 
 </p>
 
 Name                           Observations       Features

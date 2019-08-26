@@ -33,7 +33,7 @@ where $\lambda \geq 0$ is the regularization strength and $\gamma > 1$ is a user
 $$\begin{equation} \beta_j \leftarrow \begin{cases} \frac{ \Big (1 - \eta \alpha \lambda \Big )_{+} \beta_j}{1 + \eta (1-\alpha)\lambda-\frac{\eta}{\gamma}} & \text{if} \,\, \beta_j \leq \gamma \alpha \lambda \\ \frac{\beta_j}{1+\eta(1-\alpha)\lambda} & \text{otherwise}. \end{cases} \end{equation}$$
 
 <p style="text-align:justify;">
-MCP begins by applying the same rate of penalization as lasso, but continuously relaxes that penalization until $\beta_j$ becomes large [@breheny2011]. When $\alpha = 0$, this becomes the proximal updates for ridge [@friedman2010]. For MCP, **sgdnet** set the default noncovexity parameter $\gamma$ to $3$. Here we use the example from [**ncvreg**](http://pbreheny.github.io/ncvreg/) to demostrate its usage.
+MCP begins by applying the same rate of penalization as lasso, but continuously relaxes that penalization until $\beta_j$ becomes large [@breheny2011]. When $\alpha = 0$, this becomes the proximal updates for ridge [@friedman2010]. For MCP, **sgdnet** set the default noncovexity parameter $\gamma$ to $3$. Here we use the example from [**ncvreg**](https://cran.r-project.org/web/packages/ncvreg/index.html) to demostrate its usage.
 </p>
 
 ```{r mcpsetup, echo = FALSE, message = FALSE}
