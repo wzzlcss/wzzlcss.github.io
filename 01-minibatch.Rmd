@@ -65,7 +65,7 @@ for i in 1:max_iter
 To use mini-batch version of saga, user could set ```batchsize``` variable to any integer that less than sample size in ```sgdnet()``` function, which is set to 1 by default.
 </p>
 
-## Simulated Data
+## Simulated data
 
 <p style="text-align:justify;">
 Here is a benchmark [(R Sript)](https://github.com/wzzlcss/wzzlcss.github.io/blob/master/Rscript/2.3/artifical_bench.R) with artificial data of size 100 to illustrate C-SAGA and mini-batch SAGA's features, where the batch size is fixed to 10 and $\lambda = 0.01$. The C-SAGA is more efficient at evaluating each epoch.

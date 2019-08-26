@@ -1,5 +1,5 @@
 
-# Optimize mini-batching
+# Optimize Mini-Batching
 
 <p style="text-align:justify;">
 The enhancement for SAGA performance by mini-batching depends on two things. Firstly, mini-batching is expected to benefit from the efficiency of vectorized computation, which reduces the cost of a single epoch. Secondly, while the total complexity of SAGA decreases linearly in batch size up to a certain value, emperical study also shows that the complexity explodes with values greater than an optimal mini-batch size [@Gazagnadou2019]. Therefore, we expect a batch size at the optimal point with vectorized computation to bring us the best performance enhancement.
