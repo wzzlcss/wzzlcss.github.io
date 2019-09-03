@@ -111,9 +111,9 @@ ncv_snet <- ncvreg(x, y, gamma = 3.7, alpha = 0.5, penalty = "SCAD")
 
 ```{r plotscad, out.width="50%", out.extra='style="display: inline-block;"', echo=FALSE}
 plot(sgd_scad, xvar = "lambda")
-plot(ncv_mcp, log.l = TRUE)
+plot(ncv_scad, log.l = TRUE)
 plot(sgd_snet, xvar = "lambda")
-plot(ncv_mnet, log.l = TRUE)
+plot(ncv_snet, log.l = TRUE)
 ```
 
 <left>
