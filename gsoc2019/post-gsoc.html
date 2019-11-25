@@ -152,7 +152,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li><span class="math inline">\(L\)</span>-Smooth: <span class="math inline">\(f(y) \leq f(x) + \nabla f(x)^\intercal (y-x) + \frac{L}{2} \left \| y-x \right \|^2_2\)</span>
 <p style="text-align:justify;">
-If <span class="math inline">\(f\)</span> is convex, an equivalent condistion is that <span class="math inline">\(f\)</span> has <span class="math inline">\(L\)</span>-Lipschitz continuous gradient: <span class="math inline">\(\left \| \nabla f(x) - \nabla f(y) \right \|_2 \leq L \left \| x - y \right \|_2\)</span>
+If <span class="math inline">\(f\)</span> is convex, an equivalent condition is that <span class="math inline">\(f\)</span> has <span class="math inline">\(L\)</span>-Lipschitz continuous gradient: <span class="math inline">\(\left \| \nabla f(x) - \nabla f(y) \right \|_2 \leq L \left \| x - y \right \|_2\)</span>
 </p></li>
 <li><span class="math inline">\(\mu\)</span>-Strongly Convex: <span class="math inline">\(f(y) \geq f(x) + \nabla f(x)^\intercal (y-x) + \frac{\mu}{2} \left \| y-x \right \|^2_2\)</span>
 <p style="text-align:justify;">
@@ -164,10 +164,10 @@ It is a sufficient but not necessary condition for Polyak-Łojasiewicz (PL) ineq
 </p></li>
 <li><span class="math inline">\(\beta (\mathbf{H})\)</span>: Smoothness of real symmetric matirx <span class="math inline">\(\mathbf{H}\)</span>
 <p style="text-align:justify;">
-<span class="math inline">\(\beta (\mathbf{H}) = max \{ |\lambda_{max}(\mathbf{H})|, |\lambda_{min}(\mathbf{H})| \}\)</span>, where <span class="math inline">\(\lambda_{max}(\mathbf{H})\)</span> and <span class="math inline">\(\lambda_{min}(\mathbf{H})\)</span> are the largest and smallest eigenvalue of <span class="math inline">\(\mathbf{H}\)</span>. This is equavilent to <span class="math inline">\(\left | \mathbf{x}^\intercal \mathbf{H} \mathbf{x} \right | \leq \beta (\mathbf{H})\)</span>.
+<span class="math inline">\(\beta (\mathbf{H}) = max \{ |\lambda_{max}(\mathbf{H})|, |\lambda_{min}(\mathbf{H})| \}\)</span>, where <span class="math inline">\(\lambda_{max}(\mathbf{H})\)</span> and <span class="math inline">\(\lambda_{min}(\mathbf{H})\)</span> are the largest and smallest eigenvalue of <span class="math inline">\(\mathbf{H}\)</span>. This is equivalent to <span class="math inline">\(\left | \mathbf{x}^\intercal \mathbf{H} \mathbf{x} \right | \leq \beta (\mathbf{H})\)</span>.
 </p>
 <p style="text-align:justify;">
-If convex <span class="math inline">\(f\)</span> is twice differentiable, <span class="math inline">\(L\)</span>-smoothness (or <span class="math inline">\(L\)</span>-Lipschitz continuous gradient) leads to <span class="math inline">\(\nabla^2 f \preceq L \mathbf{I}\)</span> or <span class="math inline">\(\beta (\nabla^2 f) \leq L\)</span>, which gives us a way to approximate a smallest <span class="math inline">\(L\)</span>.
+If convex <span class="math inline">\(f\)</span> is twice differentiable, <span class="math inline">\(L\)</span>-smoothness (or <span class="math inline">\(L\)</span>-Lipschitz continuous gradient) leads to <span class="math inline">\(\nabla^2 f \preceq L \mathbf{I}\)</span> or <span class="math inline">\(\beta (\nabla^2 f) \leq L\)</span>, which gives a way to approximate a smallest <span class="math inline">\(L\)</span>.
 </p></li>
 </ul>
 <p>For proof: <span class="citation">(Zhou <a href="#ref-Zhou2018">2018</a>)</span></p>
@@ -179,16 +179,16 @@ If convex <span class="math inline">\(f\)</span> is twice differentiable, <span 
 <p>For gradient descent <span class="math inline">\(x^{k+1} = x^{k} - \frac{1}{L} \nabla f(x^{k})\)</span> with step size <span class="math inline">\(\frac{1}{L}\)</span>:</p>
 <p><span class="math inline">\(f(x^{k+1}) \leq f(x^k) - \frac{1}{2L} \left \| \nabla f(x^k) \right \|^2_2\)</span></p>
 <p>This step size is guaranteed to decrease the cost function</p>
-<p>If <span class="math inline">\(f\)</span> also statisfy PL inequality: <span class="math inline">\(f(x^{k+1}) \leq f(x^k) - \frac{\mu}{L}(f(x^k) - f^*)\)</span></p>
+<p>If <span class="math inline">\(f\)</span> also statisfies PL inequality: <span class="math inline">\(f(x^{k+1}) \leq f(x^k) - \frac{\mu}{L}(f(x^k) - f^*)\)</span></p>
 <p><span class="math inline">\(f(x^{k+1}) - f^* \leq (1-\frac{\mu}{L}) \left [ f(x^{k}) - f^* \right ] \leq (1-\frac{\mu}{L})^{k+1} \left [ f(x^{0}) - f^* \right ]\)</span>.</p>
-<p>Since <span class="math inline">\(\mu \leq L\)</span>, <span class="math inline">\((1-\frac{\mu}{L})^{k} \leq exp(-k \frac{\mu}{L}) \Rightarrow f(x^{k}) - f^* \leq C \text{exp}(-k\frac{\mu}{L})\)</span>, with <span class="math inline">\(f(\mathbf{w}^{0}) - f^* = C\)</span>.</p>
+<p>Since <span class="math inline">\(\mu \leq L\)</span>, <span class="math inline">\((1-\frac{\mu}{L})^{k} \leq exp(-k \frac{\mu}{L}) \Rightarrow f(x^{k}) - f^* \leq C \text{exp}(-k\frac{\mu}{L})\)</span>, with <span class="math inline">\(f(x^{0}) - f^* = C\)</span>.</p>
 <p style="text-align:justify;">
 To achieve an accuracy <span class="math inline">\(\epsilon\)</span>: <span class="math inline">\(f(x^k)-f^* \leq \epsilon\)</span>, we solve for the smallest <span class="math inline">\(k = \frac{L}{\mu} \text{log} \frac{C}{\epsilon} = O(\text{log} \frac{1}{\epsilon})\)</span> (linear convergence rate). The error between estimate at <span class="math inline">\(k^{th}\)</span> iteration and the optimal is bounded by an term that descreases expoentially with <span class="math inline">\(k\)</span>. Therefore, a <span class="math inline">\(L\)</span>-smooth function <span class="math inline">\(f\)</span> with PL inequality achives linear convergence rate to the optimal under gradient descent with <span class="math inline">\(\frac{1}{L}\)</span> as step-size. <span class="citation">(Karimi, Nutini, and Schmidt <a href="#ref-Karimi2016">2016</a>)</span>
 </p>
 <p style="text-align:justify;">
 <ul>
-<li><p>If <span class="math inline">\(f\)</span> do not satisfy PL inequality (weaker than <span class="math inline">\(\mu\)</span>-strongly convexity), <span class="math inline">\(L\)</span>-smoothness can only achieve sublinear convergence rate with <span class="math inline">\(k = O(\frac{1}{\epsilon})\)</span> to have <span class="math inline">\(\left \| \nabla f(x^k) \right \|_2 \leq \epsilon\)</span></p></li>
-<li>Adding ridge penalty to a convex loss fuction makes it strongly convex.</li>
+<li><p>If <span class="math inline">\(f\)</span> does not satisfy PL inequality (weaker than <span class="math inline">\(\mu\)</span>-strongly convexity), <span class="math inline">\(L\)</span>-smoothness can only achieve sublinear convergence rate with <span class="math inline">\(k = O(\frac{1}{\epsilon})\)</span> to have <span class="math inline">\(\left \| \nabla f(x^k) \right \|_2 \leq \epsilon\)</span></p></li>
+<li>Adding ridge penalty to a convex loss function makes it strongly convex.</li>
 </ul>
 </p>
 </div>
@@ -211,10 +211,10 @@ Under <span class="math inline">\(L\)</span>-smoothness and PL inequality assump
 Its convergence requires a diminishing step size. Variance reduction methods come in to avoid such additional regime.
 </p>
 <p style="text-align:justify;">
-SAGA uses a better gradient estimator. SAGA maintians a updated gradient table with <span class="math inline">\(\nabla f_i(\phi_i^k)\)</span> for sample <span class="math inline">\(i\)</span>. The lastest estimated gradient <span class="math inline">\(g^{k-1} = \sum_{i=1}^n \nabla f_i (\phi _i^k)\)</span> is the average of the gradient table, which is not explicitly calculated in every iteration. At iteration <span class="math inline">\(k+1\)</span>, SAGA picks a <span class="math inline">\(i_k\)</span> at random and makes a quick fix to <span class="math inline">\(g^{k-1}\)</span> by <span class="math inline">\(g^k = \nabla f _{i_k}(x^k) - \nabla f_{i_k}(\phi _{i_k}^k) + g^{k-1}\)</span>, where <span class="math inline">\(x^k\)</span> is the coefficient obtained from last iteration. The <span class="math inline">\(i_k^{\text{th}}\)</span> entry of gradient table is update <span class="math inline">\(\nabla f_{i_k}(\phi _{i_k}^{k+1}) = \nabla f _{i_k}(x^k)\)</span> with the rest remain the same <span class="math inline">\(\nabla f_{i}(\phi _{i}^{k+1}) = \nabla f_{i}(\phi _{i}^{k})\)</span>, <span class="math inline">\((i \neq i_k)\)</span>. The new <span class="math inline">\(g^k\)</span> is an unbiased estimator for average gradient at point <span class="math inline">\(x^k\)</span>.
+SAGA uses a better gradient estimator. SAGA maintians a updated gradient table with <span class="math inline">\(\nabla f_i(\phi_i)\)</span> for sample <span class="math inline">\(i\)</span>. The lastest estimated gradient <span class="math inline">\(g^{k-1} = \sum_{i=1}^n \nabla f_i (\phi _i^k)\)</span> is the average of the gradient table, which is not explicitly calculated in every iteration. At iteration <span class="math inline">\(k+1\)</span>, SAGA picks a <span class="math inline">\(i_k\)</span> at random and makes a quick fix to <span class="math inline">\(g^{k-1}\)</span> by <span class="math inline">\(g^k = \nabla f _{i_k}(x^k) - \nabla f_{i_k}(\phi _{i_k}^k) + g^{k-1}\)</span>, where <span class="math inline">\(x^k\)</span> is the coefficient obtained from last iteration and <span class="math inline">\(f_{i_k}(\phi _{i_k}^k)\)</span> is the latest <span class="math inline">\(i_k^{\text{th}}\)</span> entry of the gradient table. The <span class="math inline">\(i_k^{\text{th}}\)</span> entry of gradient table is updated <span class="math inline">\(\nabla f_{i_k}(\phi _{i_k}^{k+1}) = \nabla f _{i_k}(x^k)\)</span> with the rest remaining the same <span class="math inline">\(\nabla f_{i}(\phi _{i}^{k+1}) = \nabla f_{i}(\phi _{i}^{k})\)</span>, <span class="math inline">\((i \neq i_k)\)</span>. The new <span class="math inline">\(g^k\)</span> is an unbiased estimator for average gradient at point <span class="math inline">\(x^k\)</span>.
 </p>
 <p style="text-align:justify;">
-If <span class="math inline">\(f\)</span> is convex, as <span class="math inline">\(x^k \rightarrow x^*\)</span>, <span class="math inline">\(g^*\)</span> converges to 0 with <span class="math inline">\(\mathbb{E} (\left \| g^k \right \|_2^2) = 0\)</span>. To my knowledge, the relationship between SAGA’s performance and non-strong convexity (or a weaker PL inequality) is not fully studied.
+If <span class="math inline">\(f\)</span> is convex, as <span class="math inline">\(x^k \rightarrow x^*\)</span>, <span class="math inline">\(g^*\)</span> converges to 0 with <span class="math inline">\(\mathbb{E} (\left \| g^k \right \|_2^2) = 0\)</span>. To my knowledge, SAGA’s performance on non-strong convexity or a weaker PL inequality or nonconvexity is not fully studied.
 </p>
 </div>
 </div>
