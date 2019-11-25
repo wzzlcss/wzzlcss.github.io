@@ -62,7 +62,9 @@ Under $L$-smoothness and PL inequality assumption, the stochastic gradient desce
 $\mathbb{E} \left( f(x^{k+1}) - f^* \right) \leq ( 1 - 2 \alpha_k \mu) (f(x^k) - f^*) + \alpha_k^2 \frac{L}{2} \mathbb{E} \left ( \left \|\nabla f_{i_k} (x^k)\right \|_2^2 \right )$.</p> 
 
 <p style="text-align:justify;">
-Suppose $\mathbb{E} \left ( \left \|\nabla f_{i_k} (x^k)\right \|_2^2 \right ) \leq C$ for some constant $C$, using a fixed step size $\eta$, $\mathbb{E} \left( f(x^{k+1}) - f^* \right) \leq (1-2\eta \mu)^{k+1} (f(x^0) - f^*) + \frac{\eta L}{2 \mu}[1-(1-2\eta \mu)^{k+1}] C$.</p>
+Suppose $\mathbb{E} \left ( \left \|\nabla f_{i_k} (x^k)\right \|_2^2 \right ) \leq C$ for some constant $C$, using a fixed step size $\eta$: 
+
+$\mathbb{E} \left( f(x^{k+1}) - f^* \right) \leq (1-2\eta \mu)^{k+1} (f(x^0) - f^*) + \frac{\eta L}{2 \mu}[1-(1-2\eta \mu)^{k+1}] C$.</p>
 
 <p style="text-align:justify;">
 Its convergence requires a diminishing step size. Variance reduction methods come in to avoid such additional regime.</p>
