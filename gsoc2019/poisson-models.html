@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5 Poisson Models | GSoC 2019 Final Report</title>
   <meta name="description" content="5 Poisson Models | GSoC 2019 Final Report" />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5 Poisson Models | GSoC 2019 Final Report" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="nonconvex-penalty.html"/>
-<link rel="next" href="reference.html"/>
+<link rel="next" href="post-gsoc.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -119,6 +122,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.1" data-path="poisson-models.html"><a href="poisson-models.html#overview-1"><i class="fa fa-check"></i><b>5.1</b> Overview</a></li>
 <li class="chapter" data-level="5.2" data-path="poisson-models.html"><a href="poisson-models.html#example"><i class="fa fa-check"></i><b>5.2</b> Example</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="post-gsoc.html"><a href="post-gsoc.html"><i class="fa fa-check"></i>Post-GSoC</a><ul>
+<li class="chapter" data-level="" data-path="post-gsoc.html"><a href="post-gsoc.html#terminology"><i class="fa fa-check"></i>Terminology</a></li>
+<li class="chapter" data-level="" data-path="post-gsoc.html"><a href="post-gsoc.html#linear-convergence"><i class="fa fa-check"></i>Linear Convergence</a></li>
+<li class="chapter" data-level="" data-path="post-gsoc.html"><a href="post-gsoc.html#variance-reduction-method"><i class="fa fa-check"></i>Variance Reduction Method</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>6</b> Reference</a></li>
 </ul>
 
@@ -160,7 +168,7 @@ We use the deviance function for a Poisson distribution <span class="math inline
 The Poisson loss function is convex but not Lipschitz-continuous. To guarantee SAGA’s convergence, which rely on derivatives’ Lipschitz-continuity, we will update the approximated Lipschitz constant <span class="math inline">\(L\)</span> while running the algorithm. Starting with an initial estimate <span class="math inline">\(L^{0}\)</span> as <span class="math inline">\(L_{\text{max}}\)</span>, which is the largest sample-wise squared norm of the feature matrix, an invalid <span class="math inline">\(L^{k}\)</span> will be doubled after evaluating <span class="math inline">\(f_i\)</span> with the coefficient <span class="math inline">\(\beta_{k}\)</span> at iteration <span class="math inline">\(k\)</span>, if the following inequality is not satisfied <span class="citation">(Schmidt, Le Roux, and Bach <a href="#ref-schmidt2016">2017</a>)</span>:
 </p>
 <span class="math display">\[
-f_{i_{k}} \Big ( (\beta_{0k} + \beta_{k}^\mathsf{T} x_i) - \frac{f^{&#39;}_{i_{k}}(\beta_{0k},\beta_{k})}{L^{k}}  \left \| x_i \right \|^2_{2}  \Big ) \leq f_{i_{k}} (\beta_{0k} + \beta_{k}^\mathsf{T} x_i) - \frac{1}{2L^{k}} \left \| f^{&#39;}_{i_{k}}(\beta_{0k}, \beta_{k}) \right \|^2 \left \| x_i \right \|^2_{2}
+f_{i_{k}} \Big ( (\beta_{0k} + \beta_{k}^\mathsf{T} x_i) - \frac{f^{&#39;}_{i_{k}}(\beta_{0k},\beta_{k})}{L^{k}}  \left \| x_i \right \|^2_{2}  \Big ) \leq f_{i_{k}} (\beta_{0k} + \beta_{k}^\mathsf{T} x_i) - \frac{1}{2L^{k}} \left \| f^{&#39;}_{i_{k}}(\beta_{0k}, \beta_{k}) \right \|^2_2 \left \| x_i \right \|^2_{2}
 \]</span>
 <p style="text-align:justify;">
 where the individual norm is precomputed. The corresponding cross-validation method via <code>cv_sgdnet()</code>, as well as making prediction by <code>predict()</code> and model performance measure by <code>score()</code> are also avilable for Poisson in <strong>sgdnet</strong>.
@@ -183,6 +191,7 @@ gfit0 &lt;-<span class="st"> </span><span class="kw">glmnet</span>(x, y, <span c
 gfit1 &lt;-<span class="st"> </span><span class="kw">glmnet</span>(x, y, <span class="dt">family =</span> <span class="st">&quot;poisson&quot;</span>, <span class="dt">alpha =</span> <span class="dv">1</span>)</code></pre></div>
 <p><img src="_main_files/figure-html/plot2-1.png" width="50%" style="display: inline-block;" /><img src="_main_files/figure-html/plot2-2.png" width="50%" style="display: inline-block;" /></p>
 <p><left> Poisson model with lasso regression on caddisfly dataset </left></p>
+
 </div>
 </div>
 <h3> Reference</h3>
@@ -197,16 +206,18 @@ gfit1 &lt;-<span class="st"> </span><span class="kw">glmnet</span>(x, y, <span c
         </div>
       </div>
 <a href="nonconvex-penalty.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="reference.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="post-gsoc.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

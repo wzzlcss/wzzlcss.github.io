@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6 Reference | GSoC 2019 Final Report</title>
-  <meta name="description" content="6 Reference | GSoC 2019 Final Report" />
+  <title>Post-GSoC | GSoC 2019 Final Report</title>
+  <meta name="description" content="Post-GSoC | GSoC 2019 Final Report" />
   <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6 Reference | GSoC 2019 Final Report" />
+  <meta property="og:title" content="Post-GSoC | GSoC 2019 Final Report" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6 Reference | GSoC 2019 Final Report" />
+  <meta name="twitter:title" content="Post-GSoC | GSoC 2019 Final Report" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="post-gsoc.html"/>
-
+<link rel="prev" href="poisson-models.html"/>
+<link rel="next" href="reference.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -145,46 +145,82 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reference" class="section level1">
-<h1><span class="header-section-number">6</span> Reference</h1>
-
+<div id="post-gsoc" class="section level1 unnumbered">
+<h1>Post-GSoC</h1>
+<div id="terminology" class="section level3 unnumbered">
+<h3>Terminology</h3>
+<ul>
+<li><span class="math inline">\(L\)</span>-Smooth: <span class="math inline">\(f(y) \leq f(x) + \nabla f(x)^\intercal (y-x) + \frac{L}{2} \left \| y-x \right \|^2_2\)</span>
+<p style="text-align:justify;">
+If <span class="math inline">\(f\)</span> is convex, an equivalent condistion is that <span class="math inline">\(f\)</span> has <span class="math inline">\(L\)</span>-Lipschitz continuous gradient: <span class="math inline">\(\left \| \nabla f(x) - \nabla f(y) \right \|_2 \leq L \left \| x - y \right \|_2\)</span>
+</p></li>
+<li><span class="math inline">\(\mu\)</span>-Strongly Convex: <span class="math inline">\(f(y) \geq f(x) + \nabla f(x)^\intercal (y-x) + \frac{\mu}{2} \left \| y-x \right \|^2_2\)</span>
+<p style="text-align:justify;">
+It is a sufficient but not necessary condition for Polyak-Łojasiewicz (PL) inequality
+</p></li>
+<li>Polyak-Łojasiewicz (PL) inequality: <span class="math inline">\(\frac{1}{2} \left \| \nabla f(x) \right \|^2_2 \geq \mu (f(x) - f^*)\)</span>
+<p style="text-align:justify;">
+<span class="math inline">\(f^* = f(x^*)\)</span> is the optimal value. Also called <span class="math inline">\(\mu\)</span>-strongly invex, which implies that all stationary points are global minimum
+</p></li>
+<li><span class="math inline">\(\beta (\mathbf{H})\)</span>: Smoothness of real symmetric matirx <span class="math inline">\(\mathbf{H}\)</span>
+<p style="text-align:justify;">
+<span class="math inline">\(\beta (\mathbf{H}) = max \{ |\lambda_{max}(\mathbf{H})|, |\lambda_{min}(\mathbf{H})| \}\)</span>, where <span class="math inline">\(\lambda_{max}(\mathbf{H})\)</span> and <span class="math inline">\(\lambda_{min}(\mathbf{H})\)</span> are the largest and smallest eigenvalue of <span class="math inline">\(\mathbf{H}\)</span>. This is equavilent to <span class="math inline">\(\left | \mathbf{x}^\intercal \mathbf{H} \mathbf{x} \right | \leq \beta (\mathbf{H})\)</span>.
+</p>
+<p style="text-align:justify;">
+If convex <span class="math inline">\(f\)</span> is twice differentiable, <span class="math inline">\(L\)</span>-smoothness (or <span class="math inline">\(L\)</span>-Lipschitz continuous gradient) leads to <span class="math inline">\(\nabla^2 f \preceq L \mathbf{I}\)</span> or <span class="math inline">\(\beta (\nabla^2 f) \leq L\)</span>, which gives us a way to approximate a smallest <span class="math inline">\(L\)</span>.
+</p></li>
+</ul>
+<p>For proof: <span class="citation">(Zhou <a href="#ref-Zhou2018">2018</a>)</span></p>
+</div>
+<div id="linear-convergence" class="section level3 unnumbered">
+<h3>Linear Convergence</h3>
+<p>If <span class="math inline">\(f\)</span> is <span class="math inline">\(L\)</span>-smooth (which does not assume convexity):</p>
+<p><span class="math inline">\(f(x) \leq f(y) + \nabla f(y)^\intercal (x-y) + \frac{1}{2} L \left \| x-y \right \|^2_2\)</span></p>
+<p>For gradient descent <span class="math inline">\(x^{k+1} = x^{k} - \frac{1}{L} \nabla f(x^{k})\)</span> with step size <span class="math inline">\(\frac{1}{L}\)</span>:</p>
+<p><span class="math inline">\(f(x^{k+1}) \leq f(x^k) - \frac{1}{2L} \left \| \nabla f(x^k) \right \|^2_2\)</span></p>
+<p>This step size is guaranteed to decrease the cost function</p>
+<p>If <span class="math inline">\(f\)</span> also statisfy PL inequality: <span class="math inline">\(f(x^{k+1}) \leq f(x^k) - \frac{\mu}{L}(f(x^k) - f^*)\)</span></p>
+<p><span class="math inline">\(f(x^{k+1}) - f^* \leq (1-\frac{\mu}{L}) \left [ f(x^{k}) - f^* \right ] \leq (1-\frac{\mu}{L})^{k+1} \left [ f(x^{0}) - f^* \right ]\)</span>.</p>
+<p>Since <span class="math inline">\(\mu \leq L\)</span>, <span class="math inline">\((1-\frac{\mu}{L})^{k} \leq exp(-k \frac{\mu}{L}) \Rightarrow f(x^{k}) - f^* \leq C \text{exp}(-k\frac{\mu}{L})\)</span>, with <span class="math inline">\(f(\mathbf{w}^{0}) - f^* = C\)</span>.</p>
+<p style="text-align:justify;">
+To achieve an accuracy <span class="math inline">\(\epsilon\)</span>: <span class="math inline">\(f(x^k)-f^* \leq \epsilon\)</span>, we solve for the smallest <span class="math inline">\(k = \frac{L}{\mu} \text{log} \frac{C}{\epsilon} = O(\text{log} \frac{1}{\epsilon})\)</span> (linear convergence rate). The error between estimate at <span class="math inline">\(k^{th}\)</span> iteration and the optimal is bounded by an term that descreases expoentially with <span class="math inline">\(k\)</span>. Therefore, a <span class="math inline">\(L\)</span>-smooth function <span class="math inline">\(f\)</span> with PL inequality achives linear convergence rate to the optimal under gradient descent with <span class="math inline">\(\frac{1}{L}\)</span> as step-size. <span class="citation">(Karimi, Nutini, and Schmidt <a href="#ref-Karimi2016">2016</a>)</span>
+</p>
+<p style="text-align:justify;">
+Note: If <span class="math inline">\(f\)</span> do not satisfy PL inequality (weaker than <span class="math inline">\(\mu\)</span>-strongly convexity), <span class="math inline">\(L\)</span>-smoothness can only achieve sublinear convergence rate with <span class="math inline">\(k = O(\frac{1}{\epsilon})\)</span> to have <span class="math inline">\(\left \| \nabla f(x^k) \right \|_2 \leq \epsilon\)</span>
+</p>
+</div>
+<div id="variance-reduction-method" class="section level3 unnumbered">
+<h3>Variance Reduction Method</h3>
+<p style="text-align:justify;">
+The complexity of optimization algorithm relies both on the rate of convergence and computational cost for each iteration. The way to reduce the latter is to design a gradient estimator <span class="math inline">\(g^k\)</span> instead of using full batch.
+</p>
+<p style="text-align:justify;">
+For stochasitc gradient descent, <span class="math inline">\(\mathbb{E} (g^k) = \mathbb{E} (\nabla _{i_k} f(x^k)) = \frac{1}{n} \sum_{i=1}^{n} \nabla f(x^k)\)</span> is unbiased, however, its variance <span class="math inline">\(\mathbb{V} (g^k) = \mathbb{E} \left ( \left \| \nabla _{i_k} f(x^k) - \frac{1}{n} \sum_{i=1}^{n} \nabla f(x^k) \right \|^2_2 \right )\)</span> does not converge to 0 even at the optimal point.
+</p>
+<p style="text-align:justify;">
+Under <span class="math inline">\(L\)</span>-smoothness and PL inequality assumption, the stochastic gradient descent estimator gives <span class="math inline">\(\mathbb{E} \left( f(x^{k+1}) - f^* \right) \leq ( 1 - 2 \alpha_k \mu) (f(x^k) - f^*) + \alpha_k^2 \frac{L}{2} \mathbb{E} \left ( \left \|\nabla f_{i_k} (x^k)\right \|_2^2 \right )\)</span>.
+</p>
+<p style="text-align:justify;">
+Suppose <span class="math inline">\(\mathbb{E} \left ( \left \|\nabla f_{i_k} (x^k)\right \|_2^2 \right ) \leq C\)</span> for some constant <span class="math inline">\(C\)</span>, using a fixed step size <span class="math inline">\(\eta\)</span>, <span class="math inline">\(\mathbb{E} \left( f(x^{k+1}) - f^* \right) \leq (1-2\eta \mu)^{k+1} (f(x^0) - f^*) + \frac{\eta L}{2 \mu}[1-(1-2\eta \mu)^{k+1}] C\)</span>.
+</p>
+<p style="text-align:justify;">
+Its convergence requires a diminishing step size. Variance reduction methods come in to avoid such additional regime.
+</p>
+<p style="text-align:justify;">
+SAGA uses a better gradient estimator. SAGA maintians a updated gradient table with <span class="math inline">\(\nabla f_i(\phi_i^k)\)</span> for sample <span class="math inline">\(i\)</span>. The lastest estimated gradient <span class="math inline">\(g^{k-1} = \sum_{i=1}^n \nabla f_i (\phi _i^k)\)</span> is the average of the gradient table, which is not explicitly calculated in every iteration. At iteration <span class="math inline">\(k+1\)</span>, SAGA picks a <span class="math inline">\(i_k\)</span> at random and makes a quick fix to <span class="math inline">\(g^{k-1}\)</span> by <span class="math inline">\(g^k = \nabla f _{i_k}(x^k) - \nabla f_{i_k}(\phi _{i_k}^k) + g^{k-1}\)</span>, where <span class="math inline">\(x^k\)</span> is the coefficient obtained from last iteration. The <span class="math inline">\(i_k^{\text{th}}\)</span> entry of gradient table is update <span class="math inline">\(\nabla f_{i_k}(\phi _{i_k}^{k+1}) = \nabla f _{i_k}(x^k)\)</span> with the rest remain the same <span class="math inline">\(\nabla f_{i}(\phi _{i}^{k+1}) = \nabla f_{i}(\phi _{i}^{k})\)</span>, <span class="math inline">\((i \neq i_k)\)</span>. The new <span class="math inline">\(g^k\)</span> is an unbiased estimator for average gradient at point <span class="math inline">\(x^k\)</span>.
+</p>
+<p style="text-align:justify;">
+If <span class="math inline">\(f\)</span> is convex, as <span class="math inline">\(x^k \rightarrow x^*\)</span>, <span class="math inline">\(g^*\)</span> converges to 0 with <span class="math inline">\(\mathbb{E} (\left \| g^k \right \|_2^2) = 0\)</span>.
+</p>
+</div>
+</div>
+<h3> Reference</h3>
 <div id="refs" class="references">
-<div>
-<p>Breheny, Patrick, and Jian Huang. 2011. “Coordinate Descent Algorithms for Nonconvex Penalized Regression, with Application to Biological Feature Selection.” <em>The Annals of Applied Statistics</em> 5 (1): 232–53.</p>
-</div>
-<div>
-<p>Defazio, Aaron, Francis Bach, and Simon Lacoste-Julien. 2014. “SAGA: A Fast Incremental Gradient Method with Support for Non-Strongly Convex Composite Objectives.” In <em>Advances in Neural Information Processing Systems 27</em>, 2:1646–54. Montreal, Canada: Curran Associates, Inc.</p>
-</div>
-<div>
-<p>Fan, Jianqing, and Runze Li. 2001. “Variable Selection via Nonconcave Penalized Likelihood and Its Oracle Properties.” <em>Journal of the American Statistical Association</em> 38 (2): 1348–60.</p>
-</div>
-<div>
-<p>Friedman, Jerome, Trevor Hastie, and Robert Tibshirani. 2010. “Regularization Paths for Generalized Linear Models via Coordinate Descent.” <em>Journal of Statistical Software</em> 33 (1): 1–22.</p>
-</div>
-<div>
-<p>Gazagnadou, Nidham, Robert M. Gower, and Joseph Salmon. 2019. “Optimal Mini-Batch and Step Sizes for SAGA.” <em>arXiv:1902.00071 [Math]</em>, July. <a href="http://arxiv.org/abs/1902.00071" class="uri">http://arxiv.org/abs/1902.00071</a>.</p>
-</div>
-<div>
-<p>Huang, Breheny, Jian., and Cun-Hui Zhang. 2016. “The Mnet Method for Variable Selection.” <em>Statistica Sinica</em> 26 (3): 903–23.</p>
-</div>
-<div>
+<div id="ref-Karimi2016">
 <p>Karimi, Hamed, Julie Nutini, and Mark Schmidt. 2016. “Linear Convergence of Gradient and Proximal-Gradient Methods Under the Polyak-Łojasiewicz Condition.” <em>arXiv:1608.04636 [Cs]</em>, August. <a href="http://arxiv.org/abs/1608.04636" class="uri">http://arxiv.org/abs/1608.04636</a>.</p>
 </div>
-<div>
-<p>Park, Youngsuk, and Ernest K. Ryu. 2018. “Linear Convergence of Cyclic SAGA.” <em>arXiv:1810.11167 [Math]</em>, October. <a href="http://arxiv.org/abs/1810.11167" class="uri">http://arxiv.org/abs/1810.11167</a>.</p>
-</div>
-<div>
-<p>Schmidt, Mark, Nicolas Le Roux, and Francis Bach. 2017. “Minimizing Finite Sums with the Stochastic Average Gradient.” <em>Mathematical Programming</em> 162 (1-2): 83–112.</p>
-</div>
-<div>
-<p>Wang, Zhu et al. 2016. “Penalized Count Data Regression with Application to Hospital Stay After Pediatric Cardiac Surgery.” <em>Stat Methods Med Res</em> 25 (6): 2685–2703.</p>
-</div>
-<div>
-<p>Zhang, Cun-Hui. 2010. “Nearly Unbiased Variable Selection Under Minimax Concave Penalty.” <em>The Annals of Applied Statistics</em> 38 (2): 894–942.</p>
-</div>
-<div>
+<div id="ref-Zhou2018">
 <p>Zhou, Xingyu. 2018. “On the Fenchel Duality Between Strong Convexity and Lipschitz Continuous Gradient.” <em>arXiv:1803.06573 [Math]</em>, March. <a href="http://arxiv.org/abs/1803.06573" class="uri">http://arxiv.org/abs/1803.06573</a>.</p>
-</div>
 </div>
 </div>
             </section>
@@ -192,8 +228,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="post-gsoc.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="poisson-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="reference.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

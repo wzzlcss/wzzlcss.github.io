@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4 Nonconvex Penalty | GSoC 2019 Final Report</title>
   <meta name="description" content="4 Nonconvex Penalty | GSoC 2019 Final Report" />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4 Nonconvex Penalty | GSoC 2019 Final Report" />
   <meta property="og:type" content="book" />
@@ -40,6 +40,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -119,6 +122,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.1" data-path="poisson-models.html"><a href="poisson-models.html#overview-1"><i class="fa fa-check"></i><b>5.1</b> Overview</a></li>
 <li class="chapter" data-level="5.2" data-path="poisson-models.html"><a href="poisson-models.html#example"><i class="fa fa-check"></i><b>5.2</b> Example</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="post-gsoc.html"><a href="post-gsoc.html"><i class="fa fa-check"></i>Post-GSoC</a><ul>
+<li class="chapter" data-level="" data-path="post-gsoc.html"><a href="post-gsoc.html#terminology"><i class="fa fa-check"></i>Terminology</a></li>
+<li class="chapter" data-level="" data-path="post-gsoc.html"><a href="post-gsoc.html#linear-convergence"><i class="fa fa-check"></i>Linear Convergence</a></li>
+<li class="chapter" data-level="" data-path="post-gsoc.html"><a href="post-gsoc.html#variance-reduction-method"><i class="fa fa-check"></i>Variance Reduction Method</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>6</b> Reference</a></li>
 </ul>
 
@@ -142,7 +150,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="introduction" class="section level2">
 <h2><span class="header-section-number">4.1</span> Introduction</h2>
 <p style="text-align:justify;">
-In addition to lasso, ridge and elastic net penalty, <strong>sgdnet</strong> also fits along regularization path for gaussian regression using nonconvex penalties, which are minimax concave penalty (MCP) <span class="citation">(Zhang <a href="#ref-zhang2010">2010</a>)</span> and smoothly clipped absolute penalty (SCAD) <span class="citation">(Fan and Li <a href="#ref-fan2001">2001</a>)</span>.
+In addition to lasso, ridge and elastic net penalty, <strong>sgdnet</strong> also fits along regularization path for gaussian regression using nonconvex penalties, which are minimax concave penalty (MCP) <span class="citation">(Zhang <a href="#ref-zhang2010">2010</a>)</span> and smoothly clipped absolute penalty (SCAD) <span class="citation">(Fan and Li <a href="#ref-fan2001">2001</a>)</span>. Existing description and implementation of MCP and SCAD are in coordinate descent’s setting, here we proposed the methods with proximal gradient descent.
 </p>
 <p style="text-align:justify;">
 The ridge part in <strong>sgdnet</strong> use scale update <span class="math inline">\(\beta^{k + n} = \beta^{k} \prod _{i = 1}^{n}(1- \eta(1-\alpha) \lambda)\)</span>, where <span class="math inline">\(\lambda\)</span> is the regularization strength, <span class="math inline">\(\alpha\)</span> is elastic net mixing parameter and <span class="math inline">\(\eta\)</span> is the step size. Other penalties are applied via a proximal step at each iteration from the coefficient <span class="math inline">\(\beta^{k+\frac{1}{2}}\)</span> after the average gradient step. The proximal step solves a minimization problem:
@@ -234,11 +242,13 @@ ncv_snet &lt;-<span class="st"> </span><span class="kw">ncvreg</span>(x, y, <spa
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

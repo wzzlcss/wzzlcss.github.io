@@ -27,7 +27,7 @@ The Poisson loss function is convex but not Lipschitz-continuous. To guarantee S
 </p>
 
 $$
-f_{i_{k}} \Big ( (\beta_{0k} + \beta_{k}^\mathsf{T} x_i) - \frac{f^{'}_{i_{k}}(\beta_{0k},\beta_{k})}{L^{k}}  \left \| x_i \right \|^2_{2}  \Big ) \leq f_{i_{k}} (\beta_{0k} + \beta_{k}^\mathsf{T} x_i) - \frac{1}{2L^{k}} \left \| f^{'}_{i_{k}}(\beta_{0k}, \beta_{k}) \right \|^2 \left \| x_i \right \|^2_{2}
+f_{i_{k}} \Big ( (\beta_{0k} + \beta_{k}^\mathsf{T} x_i) - \frac{f^{'}_{i_{k}}(\beta_{0k},\beta_{k})}{L^{k}}  \left \| x_i \right \|^2_{2}  \Big ) \leq f_{i_{k}} (\beta_{0k} + \beta_{k}^\mathsf{T} x_i) - \frac{1}{2L^{k}} \left \| f^{'}_{i_{k}}(\beta_{0k}, \beta_{k}) \right \|^2_2 \left \| x_i \right \|^2_{2}
 $$
 <p style="text-align:justify;">
 where the individual norm is precomputed. The corresponding cross-validation method via ```cv_sgdnet()```, as well as making prediction by ```predict()``` and model performance measure by ```score()``` are also avilable for Poisson in **sgdnet**.
@@ -75,5 +75,3 @@ plot(gfit1)
 <left>
 Poisson model with lasso regression on caddisfly dataset
 </left>
-
-# Reference
