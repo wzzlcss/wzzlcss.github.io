@@ -75,6 +75,6 @@ Its convergence requires a diminishing step size. Variance reduction methods com
 SAGA uses a better gradient estimator. SAGA maintians a updated gradient table with $\nabla f_i(\phi_i^k)$ for sample $i$. The lastest estimated gradient $g^{k-1} = \sum_{i=1}^n \nabla f_i (\phi _i^k)$ is the average of the gradient table, which is not explicitly calculated in every iteration. At iteration $k+1$, SAGA picks a $i_k$ at random and makes a quick fix to $g^{k-1}$ by $g^k = \nabla f _{i_k}(x^k) - \nabla  f_{i_k}(\phi _{i_k}^k) + g^{k-1}$, where $x^k$ is the coefficient obtained from last iteration. The $i_k^{\text{th}}$ entry of gradient table is update $\nabla f_{i_k}(\phi _{i_k}^{k+1}) = \nabla f _{i_k}(x^k)$ with the rest remain the same $\nabla f_{i}(\phi _{i}^{k+1}) = \nabla f_{i}(\phi _{i}^{k})$, $(i \neq i_k)$. The new $g^k$ is an unbiased estimator for average gradient at point $x^k$.</p>
 
 <p style="text-align:justify;">
-If $f$ is convex, as $x^k \rightarrow x^*$, $g^*$ converges to 0 with $\mathbb{E} (\left \| g^k \right \|_2^2) = 0$. To my knowledge, the relationship between SAGA's performance and strong convexity (or a weaker PL inequality) is not fully studied</p>
+If $f$ is convex, as $x^k \rightarrow x^*$, $g^*$ converges to 0 with $\mathbb{E} (\left \| g^k \right \|_2^2) = 0$. To my knowledge, SAGA's performance on non-strong convexity or a weaker PL inequality or nonconvexity is not fully studied.</p>
 
 # Reference
