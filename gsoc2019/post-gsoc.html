@@ -186,7 +186,10 @@ If convex <span class="math inline">\(f\)</span> is twice differentiable, <span 
 To achieve an accuracy <span class="math inline">\(\epsilon\)</span>: <span class="math inline">\(f(x^k)-f^* \leq \epsilon\)</span>, we solve for the smallest <span class="math inline">\(k = \frac{L}{\mu} \text{log} \frac{C}{\epsilon} = O(\text{log} \frac{1}{\epsilon})\)</span> (linear convergence rate). The error between estimate at <span class="math inline">\(k^{th}\)</span> iteration and the optimal is bounded by an term that descreases expoentially with <span class="math inline">\(k\)</span>. Therefore, a <span class="math inline">\(L\)</span>-smooth function <span class="math inline">\(f\)</span> with PL inequality achives linear convergence rate to the optimal under gradient descent with <span class="math inline">\(\frac{1}{L}\)</span> as step-size. <span class="citation">(Karimi, Nutini, and Schmidt <a href="#ref-Karimi2016">2016</a>)</span>
 </p>
 <p style="text-align:justify;">
-Note: If <span class="math inline">\(f\)</span> do not satisfy PL inequality (weaker than <span class="math inline">\(\mu\)</span>-strongly convexity), <span class="math inline">\(L\)</span>-smoothness can only achieve sublinear convergence rate with <span class="math inline">\(k = O(\frac{1}{\epsilon})\)</span> to have <span class="math inline">\(\left \| \nabla f(x^k) \right \|_2 \leq \epsilon\)</span>
+<ul>
+<li><p>If <span class="math inline">\(f\)</span> do not satisfy PL inequality (weaker than <span class="math inline">\(\mu\)</span>-strongly convexity), <span class="math inline">\(L\)</span>-smoothness can only achieve sublinear convergence rate with <span class="math inline">\(k = O(\frac{1}{\epsilon})\)</span> to have <span class="math inline">\(\left \| \nabla f(x^k) \right \|_2 \leq \epsilon\)</span></p></li>
+<li>Adding ridge penalty to a convex loss fuction makes it strongly convex.</li>
+</ul>
 </p>
 </div>
 <div id="variance-reduction-method" class="section level3 unnumbered">
@@ -211,7 +214,7 @@ Its convergence requires a diminishing step size. Variance reduction methods com
 SAGA uses a better gradient estimator. SAGA maintians a updated gradient table with <span class="math inline">\(\nabla f_i(\phi_i^k)\)</span> for sample <span class="math inline">\(i\)</span>. The lastest estimated gradient <span class="math inline">\(g^{k-1} = \sum_{i=1}^n \nabla f_i (\phi _i^k)\)</span> is the average of the gradient table, which is not explicitly calculated in every iteration. At iteration <span class="math inline">\(k+1\)</span>, SAGA picks a <span class="math inline">\(i_k\)</span> at random and makes a quick fix to <span class="math inline">\(g^{k-1}\)</span> by <span class="math inline">\(g^k = \nabla f _{i_k}(x^k) - \nabla f_{i_k}(\phi _{i_k}^k) + g^{k-1}\)</span>, where <span class="math inline">\(x^k\)</span> is the coefficient obtained from last iteration. The <span class="math inline">\(i_k^{\text{th}}\)</span> entry of gradient table is update <span class="math inline">\(\nabla f_{i_k}(\phi _{i_k}^{k+1}) = \nabla f _{i_k}(x^k)\)</span> with the rest remain the same <span class="math inline">\(\nabla f_{i}(\phi _{i}^{k+1}) = \nabla f_{i}(\phi _{i}^{k})\)</span>, <span class="math inline">\((i \neq i_k)\)</span>. The new <span class="math inline">\(g^k\)</span> is an unbiased estimator for average gradient at point <span class="math inline">\(x^k\)</span>.
 </p>
 <p style="text-align:justify;">
-If <span class="math inline">\(f\)</span> is convex, as <span class="math inline">\(x^k \rightarrow x^*\)</span>, <span class="math inline">\(g^*\)</span> converges to 0 with <span class="math inline">\(\mathbb{E} (\left \| g^k \right \|_2^2) = 0\)</span>.
+If <span class="math inline">\(f\)</span> is convex, as <span class="math inline">\(x^k \rightarrow x^*\)</span>, <span class="math inline">\(g^*\)</span> converges to 0 with <span class="math inline">\(\mathbb{E} (\left \| g^k \right \|_2^2) = 0\)</span>. To my knowledge, the relationship between SAGA’s performance and strong convexity (or a weaker PL inequality) is not fully studied
 </p>
 </div>
 </div>
