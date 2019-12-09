@@ -175,6 +175,7 @@ where <span class="math inline">\(\lambda \geq 0\)</span> is the regularization 
 <p style="text-align:justify;">
 MCP begins by applying the same rate of penalization as lasso, but continuously relaxes that penalization until <span class="math inline">\(\beta_j\)</span> becomes large <span class="citation">(Breheny and Huang <a href="#ref-breheny2011">2011</a>)</span>. When <span class="math inline">\(\alpha = 0\)</span>, this becomes the proximal updates for ridge <span class="citation">(Friedman, Hastie, and Tibshirani <a href="#ref-friedman2010">2010</a>)</span>. For MCP, <strong>sgdnet</strong> set the default noncovexity parameter <span class="math inline">\(\gamma\)</span> to <span class="math inline">\(3\)</span>. Here we use the example from <a href="https://cran.r-project.org/web/packages/ncvreg/index.html"><strong>ncvreg</strong></a> to demostrate its usage.
 </p>
+<pre><code>## Warning: package &#39;testthat&#39; was built under R version 3.5.2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(prostate)
 x &lt;-<span class="st"> </span>prostate<span class="op">$</span>x
 y &lt;-<span class="st"> </span>prostate<span class="op">$</span>y

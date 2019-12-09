@@ -41,7 +41,7 @@ For illustration, we compare with [**glmnet**](https://cran.r-project.org/web/pa
 
 ```{r echo = FALSE, message = FALSE}
 devtools::load_all("~/sgdnet/family/poisson/sgdnet")
-library(glmnet)
+suppressPackageStartupMessages(library(glmnet))
 ```
 
 ```{r poisson}
