@@ -45,5 +45,5 @@ This benchmark [(R Sript)](https://github.com/wzzlcss/wzzlcss.github.io/blob/mas
 
 ![Binomial data with ridge](./figure/binomial.png)
 
-With $(b = \mathcal{B}^*, \eta_{\text{optimal}})$, mini-batch SAGA could converge with less epoch for most examples, which brings hope to futrue work based on Eigen 3.4's coming functionality of geting view into submatrix by indexing with a vector of indices.
+With $(b = \mathcal{B}^*, \eta_{\text{optimal}})$, mini-batch SAGA could converge with less epoch for most examples, which brings hope to futrue work based on Eigen 3.4's coming functionality of geting view into submatrix by indexing with a vector of indices [(Issue 30)](https://github.com/jolars/sgdnet/issues/30).
 

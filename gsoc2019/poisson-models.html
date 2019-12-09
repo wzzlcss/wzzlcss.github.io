@@ -179,6 +179,8 @@ where the individual norm is precomputed. The corresponding cross-validation met
 <p style="text-align:justify;">
 For illustration, we compare with <a href="https://cran.r-project.org/web/packages/glmnet/index.html"><strong>glmnet</strong></a> using the fitting results of caddisfly dataset along regularization path. This dataset describes the abundances of one of 17 species in <a href="https://pbil.univ-lyon1.fr/ADE-4/ade4-html/trichometeo.html">original dataset</a>, which is Stactobiella risi, and 12 meteorological features that may influence its presence during 49 trapping night.
 </p>
+<pre><code>## Warning: package &#39;Matrix&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## Warning: package &#39;foreach&#39; was built under R version 3.5.2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;caddisfly&quot;</span>)
 x &lt;-<span class="st"> </span>caddisfly<span class="op">$</span>x
 y &lt;-<span class="st"> </span>caddisfly<span class="op">$</span>y
