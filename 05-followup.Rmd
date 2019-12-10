@@ -79,7 +79,7 @@ If $f$ is convex, as $x^k \rightarrow x^*$, $g^*$ converges to 0 with $\mathbb{E
 
 ### More benchmark {-}
 <p style="text-align:justify;">
-Due to the fact that overhead dominates when batch size is not large enough, in addtion to optimized batch size and step size, an additional consideration is forbidden a small optimal batch $( <100 )$. The following plot show [(R Sript)](https://github.com/wzzlcss/wzzlcss.github.io/blob/master/Rscript/pos-gsoc/path.R) the improvement along a regularization path with $\mathcal{B}^*$ and $\eta_{\text{optimal}}$, the largest $\lambda$ for $\mathcal{B}^* \leq 100$ is highlighted. Optimized mini-batch is helpful for problem with ridge penalty and large $\lambda$. </p>
+Due to the fact that overhead dominates when batch size is not large enough, in addtion to optimized batch size and step size, an additional consideration is forbidden a small optimal batch $( <100 )$. The following plot show [(R Sript)](https://github.com/wzzlcss/wzzlcss.github.io/blob/master/Rscript/pos-gsoc/path.R) the improvement along a regularization path with $\mathcal{B}^*$ and $\eta_{\text{optimal}}$, the largest $\lambda$ for $\mathcal{B}^* \leq 100$ or smallest $\mathcal{B}^*$ is highlighted. Optimized mini-batch is helpful for problem with ridge penalty and large $\lambda$. </p>
 
 ![Gaussian: abalone ($n = 4,177, p = 8$)](./figure/abalone.png)
 
