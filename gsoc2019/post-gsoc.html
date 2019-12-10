@@ -126,6 +126,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="post-gsoc.html"><a href="post-gsoc.html#terminology"><i class="fa fa-check"></i>Terminology</a></li>
 <li class="chapter" data-level="" data-path="post-gsoc.html"><a href="post-gsoc.html#linear-convergence"><i class="fa fa-check"></i>Linear Convergence</a></li>
 <li class="chapter" data-level="" data-path="post-gsoc.html"><a href="post-gsoc.html#variance-reduction-method"><i class="fa fa-check"></i>Variance Reduction Method</a></li>
+<li class="chapter" data-level="" data-path="post-gsoc.html"><a href="post-gsoc.html#more-benchmark"><i class="fa fa-check"></i>More benchmark</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>6</b> Reference</a></li>
 </ul>
@@ -216,6 +217,32 @@ SAGA uses a better gradient estimator. SAGA maintians a updated gradient table w
 <p style="text-align:justify;">
 If <span class="math inline">\(f\)</span> is convex, as <span class="math inline">\(x^k \rightarrow x^*\)</span>, <span class="math inline">\(g^*\)</span> converges to 0 with <span class="math inline">\(\mathbb{E} (\left \| g^k \right \|_2^2) = 0\)</span>. To my knowledge, SAGA’s performance on non-strong convexity or a weaker PL inequality or nonconvexity is not fully studied.
 </p>
+</div>
+<div id="more-benchmark" class="section level3 unnumbered">
+<h3>More benchmark</h3>
+<p style="text-align:justify;">
+Due to the fact that overhead dominates when batch size is not large enough, in addtion to optimized batch size and step size, an additional consideration is forbidden a small optimal batch <span class="math inline">\(( &lt;100 )\)</span>. The following plot show <a href="https://github.com/wzzlcss/wzzlcss.github.io/blob/master/Rscript/pos-gsoc/path.R">(R Sript)</a> the improvement along a regularization path with <span class="math inline">\(\mathcal{B}^*\)</span> and <span class="math inline">\(\eta_{\text{optimal}}\)</span>, the smallest <span class="math inline">\(\lambda\)</span> for <span class="math inline">\(\mathcal{B}^* \geq 100\)</span> is highlighted. Optimized mini-batch is helpful for problem with ridge penalty and large <span class="math inline">\(\lambda\)</span>.
+</p>
+<div class="figure">
+<img src="figure/abalone.png" alt="Gaussian: abalone (n = 4,177, p = 8)" />
+<p class="caption">Gaussian: abalone (<span class="math inline">\(n = 4,177, p = 8\)</span>)</p>
+</div>
+<div class="figure">
+<img src="figure/cadata.png" alt="Gaussian: cadata (n = 20,640, p = 8)" />
+<p class="caption">Gaussian: cadata (<span class="math inline">\(n = 20,640, p = 8\)</span>)</p>
+</div>
+<div class="figure">
+<img src="figure/ijcnn1.png" alt="Binomial: ijcnn1 (n = 49,990, p = 22)" />
+<p class="caption">Binomial: ijcnn1 (<span class="math inline">\(n = 49,990, p = 22\)</span>)</p>
+</div>
+<div class="figure">
+<img src="figure/poker.png" alt="Multinomial: poker (n = 25,010, p = 10)" />
+<p class="caption">Multinomial: poker (<span class="math inline">\(n = 25,010, p = 10\)</span>)</p>
+</div>
+<div class="figure">
+<img src="figure/naval.png" alt="Multivariate: naval (n = 11,934, p = 2)" />
+<p class="caption">Multivariate: naval (<span class="math inline">\(n = 11,934, p = 2\)</span>)</p>
+</div>
 </div>
 </div>
 <h3> Reference</h3>
