@@ -4,7 +4,7 @@
 ## Introduction
 
 <p style="text-align:justify;">
-In addition to lasso, ridge and elastic net penalty, **sgdnet** also fits along regularization path for gaussian regression using nonconvex penalties, which are minimax concave penalty (MCP) [@zhang2010] and smoothly clipped absolute penalty (SCAD) [@fan2001]. Existing description and implementation of MCP and SCAD are in coordinate descent's setting, here we proposed the methods with proximal gradient descent.</p>
+In addition to lasso, ridge and elastic net penalty, **sgdnet** also fits along regularization path for gaussian regression using nonconvex penalties, which are minimax concave penalty (MCP) [@zhang2010] and smoothly clipped absolute deviation (SCAD) [@fan2001]. Existing description and implementation of MCP and SCAD are in coordinate descent's setting, here we proposed the methods with proximal gradient descent.</p>
 
 <p style="text-align:justify;">
 The ridge part in **sgdnet** use scale update $\beta^{k + n} = \beta^{k} \prod _{i = 1}^{n}(1- \eta(1-\alpha) \lambda)$, where $\lambda$ is the regularization strength, $\alpha$ is elastic net mixing parameter and $\eta$ is the step size. Other penalties are applied via a proximal step at each iteration from the coefficient $\beta^{k+\frac{1}{2}}$ after the average gradient step. The proximal step solves a minimization problem:
@@ -33,7 +33,7 @@ where $\lambda \geq 0$ is the regularization strength and $\gamma > 1$ is a user
 $$\begin{equation} \beta_j \leftarrow \begin{cases} \frac{ \Big (1 - \eta \alpha \lambda \Big )_{+} \beta_j}{1 + \eta (1-\alpha)\lambda-\frac{\eta}{\gamma}} & \text{if} \,\, |\beta_j| \leq \gamma \alpha \lambda \Big (1 + (1- \alpha) \lambda\Big ) \\ \frac{\beta_j}{1+\eta(1-\alpha)\lambda} & \text{otherwise}. \end{cases} \end{equation}$$
 
 <p style="text-align:justify;">
-MCP begins by applying the same rate of penalization as lasso, but continuously relaxes that penalization until $\beta_j$ becomes large [@breheny2011]. When $\alpha = 0$, this becomes the proximal updates for ridge [@friedman2010]. For MCP, **sgdnet** set the default noncovexity parameter $\gamma$ to $3$. Here we use the example from [**ncvreg**](https://cran.r-project.org/web/packages/ncvreg/index.html) to demostrate its usage.
+MCP begins by applying the same rate of penalization as lasso, but continuously relaxes that penalization until $\beta_j$ becomes large [@breheny2011]. When $\alpha = 0$, this becomes the proximal updates for ridge [@friedman2010]. For MCP, **sgdnet** set the default noncovexity parameter $\gamma$ to $3$. Here we use the example from [**ncvreg**](https://cran.r-project.org/web/packages/ncvreg/index.html) to demostrate its usage, while [**ncvreg**](https://cran.r-project.org/web/packages/ncvreg/index.html) uses coordinate descent method.
 </p>
 
 ```{r ncvregfit, echo = FALSE, message = FALSE, warning=FALSE}

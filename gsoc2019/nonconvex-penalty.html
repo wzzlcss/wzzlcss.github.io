@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4 Nonconvex Penalty | GSoC 2019 Final Report</title>
   <meta name="description" content="4 Nonconvex Penalty | GSoC 2019 Final Report" />
-  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4 Nonconvex Penalty | GSoC 2019 Final Report" />
   <meta property="og:type" content="book" />
@@ -151,7 +151,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="introduction" class="section level2">
 <h2><span class="header-section-number">4.1</span> Introduction</h2>
 <p style="text-align:justify;">
-In addition to lasso, ridge and elastic net penalty, <strong>sgdnet</strong> also fits along regularization path for gaussian regression using nonconvex penalties, which are minimax concave penalty (MCP) <span class="citation">(Zhang <a href="#ref-zhang2010">2010</a>)</span> and smoothly clipped absolute penalty (SCAD) <span class="citation">(Fan and Li <a href="#ref-fan2001">2001</a>)</span>. Existing description and implementation of MCP and SCAD are in coordinate descent’s setting, here we proposed the methods with proximal gradient descent.
+In addition to lasso, ridge and elastic net penalty, <strong>sgdnet</strong> also fits along regularization path for gaussian regression using nonconvex penalties, which are minimax concave penalty (MCP) <span class="citation">(Zhang <a href="#ref-zhang2010">2010</a>)</span> and smoothly clipped absolute deviation (SCAD) <span class="citation">(Fan and Li <a href="#ref-fan2001">2001</a>)</span>. Existing description and implementation of MCP and SCAD are in coordinate descent’s setting, here we proposed the methods with proximal gradient descent.
 </p>
 <p style="text-align:justify;">
 The ridge part in <strong>sgdnet</strong> use scale update <span class="math inline">\(\beta^{k + n} = \beta^{k} \prod _{i = 1}^{n}(1- \eta(1-\alpha) \lambda)\)</span>, where <span class="math inline">\(\lambda\)</span> is the regularization strength, <span class="math inline">\(\alpha\)</span> is elastic net mixing parameter and <span class="math inline">\(\eta\)</span> is the step size. Other penalties are applied via a proximal step at each iteration from the coefficient <span class="math inline">\(\beta^{k+\frac{1}{2}}\)</span> after the average gradient step. The proximal step solves a minimization problem:
@@ -174,7 +174,7 @@ where <span class="math inline">\(\lambda \geq 0\)</span> is the regularization 
 </p>
 <p><span class="math display">\[\begin{equation} \beta_j \leftarrow \begin{cases} \frac{ \Big (1 - \eta \alpha \lambda \Big )_{+} \beta_j}{1 + \eta (1-\alpha)\lambda-\frac{\eta}{\gamma}} &amp; \text{if} \,\, |\beta_j| \leq \gamma \alpha \lambda \Big (1 + (1- \alpha) \lambda\Big ) \\ \frac{\beta_j}{1+\eta(1-\alpha)\lambda} &amp; \text{otherwise}. \end{cases} \end{equation}\]</span></p>
 <p style="text-align:justify;">
-MCP begins by applying the same rate of penalization as lasso, but continuously relaxes that penalization until <span class="math inline">\(\beta_j\)</span> becomes large <span class="citation">(Breheny and Huang <a href="#ref-breheny2011">2011</a>)</span>. When <span class="math inline">\(\alpha = 0\)</span>, this becomes the proximal updates for ridge <span class="citation">(Friedman, Hastie, and Tibshirani <a href="#ref-friedman2010">2010</a>)</span>. For MCP, <strong>sgdnet</strong> set the default noncovexity parameter <span class="math inline">\(\gamma\)</span> to <span class="math inline">\(3\)</span>. Here we use the example from <a href="https://cran.r-project.org/web/packages/ncvreg/index.html"><strong>ncvreg</strong></a> to demostrate its usage.
+MCP begins by applying the same rate of penalization as lasso, but continuously relaxes that penalization until <span class="math inline">\(\beta_j\)</span> becomes large <span class="citation">(Breheny and Huang <a href="#ref-breheny2011">2011</a>)</span>. When <span class="math inline">\(\alpha = 0\)</span>, this becomes the proximal updates for ridge <span class="citation">(Friedman, Hastie, and Tibshirani <a href="#ref-friedman2010">2010</a>)</span>. For MCP, <strong>sgdnet</strong> set the default noncovexity parameter <span class="math inline">\(\gamma\)</span> to <span class="math inline">\(3\)</span>. Here we use the example from <a href="https://cran.r-project.org/web/packages/ncvreg/index.html"><strong>ncvreg</strong></a> to demostrate its usage, while <a href="https://cran.r-project.org/web/packages/ncvreg/index.html"><strong>ncvreg</strong></a> uses coordinate descent method.
 </p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(prostate)
 x &lt;-<span class="st"> </span>prostate<span class="op">$</span>x
@@ -257,12 +257,11 @@ gitbook.start({
 "github": false,
 "facebook": false,
 "twitter": false,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -274,6 +273,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
